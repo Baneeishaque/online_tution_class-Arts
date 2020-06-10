@@ -11,10 +11,10 @@ if (isset($_POST['submit'])) {
 
     $student_insertion_sql = "INSERT INTO `students`(`full_name`, `mobile_number`, `email_address`, `studying_class`) VALUES ('$full_name','$mobile_number','$email_address','$studying_class')";
 
-    $query_result = $db_connection->query($student_insertion_sql);
-//    echo $query_result;
+    $student_insertion_query_result = $db_connection->query($student_insertion_sql);
+//    echo $student_insertion_query_result;
 
-    if ($query_result == 1) {
+    if ($student_insertion_query_result == 1) {
 
         //Insertion Success
         header("Location: index.php?message=success");
@@ -65,7 +65,7 @@ MAIN CONTENT
     <div class="container">
 
         <form class="form-login" action="registration.php" method="post">
-            <h2 class="form-login-heading">Registration</h2>
+            <h2 class="form-login-heading">Register Now</h2>
             <?php
             if (isset($_GET['message']) && $_GET['message'] == 'failure') {
 

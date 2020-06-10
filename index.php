@@ -1,3 +1,42 @@
+<?php
+include_once 'db_config.php';
+if (isset($_POST['submit'])) {
+
+//    echo 'from submission section';
+//    var_dump($_POST);
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $student_login_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `studying_class`, `status`, `username`, `password` FROM `students` WHERE `username`='$username' AND `password`='$password'";
+//    echo $student_login_sql;
+
+    $student_login_query_result = $db_connection->query($student_login_sql);
+//    var_dump($student_login_query_result);
+
+    if (mysqli_num_rows($student_login_query_result) == 0) {
+
+        //No User
+        header("Location: index.php?message=no_user");
+        exit();
+
+    } else {
+
+        $student_login_query_result_row = mysqli_fetch_assoc($student_login_query_result);
+//        var_dump($student_login_query_result_row);
+        if ($student_login_query_result_row['status'] == 0) {
+
+            //Unverified User
+            header("Location: index.php?message=unverified_user");
+            exit();
+
+        } else {
+
+            //Goto Home
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,15 +76,26 @@ MAIN CONTENT
         <form class="form-login" action="index.php" method="post">
             <h2 class="form-login-heading">sign in now</h2>
             <?php
-            if (isset($_GET['message']) && $_GET['message'] == 'success') {
+            if (isset($_GET['message'])) {
 
-                echo '            <div class="alert alert-success"><b>Well done!</b> You have successfully registered, please wait for confirmation...</div>';
+                if ($_GET['message'] == 'success') {
+
+                    echo '            <div class="alert alert-success"><b>Well done!</b> You have successfully registered, please wait for confirmation...</div>';
+
+                } else if ($_GET['message'] == 'no_user') {
+
+                    echo '            <div class="alert alert-danger"><b>Oh snap!</b> Invalid credentials...</div>';
+
+                } else if ($_GET['message'] == 'unverified_user') {
+
+                    echo '<div class="alert alert-warning"><b>Warning!</b> Better check yourself, you\'re not verified yet...</div>';
+                }
             }
             ?>
             <div class="login-wrap">
-                <input type="text" class="form-control" placeholder="User ID" autofocus>
+                <input type="text" class="form-control" placeholder="User ID" name="username" required autofocus>
                 <br>
-                <input type="password" class="form-control" placeholder="Password">
+                <input type="password" class="form-control" placeholder="Password" name="password" required>
                 <br>
 
                 <!--                <label class="checkbox">-->
@@ -53,8 +103,7 @@ MAIN CONTENT
                 <!--		                    <a data-toggle="modal" href="index.php#myModal"> Forgot Password?</a>-->
                 <!--		                </span>-->
                 <!--                </label>-->
-                <button class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> SIGN
-                    IN
+                <button class="btn btn-theme btn-block" type="submit" name="submit"><i class="fa fa-lock"></i> Sign In
                 </button>
                 <hr>
 
