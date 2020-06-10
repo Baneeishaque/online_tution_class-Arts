@@ -1,3 +1,33 @@
+<?php
+include_once 'db_config.php';
+if (isset($_POST['submit'])) {
+
+//    echo 'from submission section';
+
+    $full_name = $_POST['full_name'];
+    $mobile_number = $_POST['mobile_number'];
+    $email_address = $_POST['email_address'];
+    $studying_class = $_POST['studying_class'];
+
+    $student_insertion_sql = "INSERT INTO `students`(`full_name`, `mobile_number`, `email_address`, `studying_class`) VALUES ('$full_name','$mobile_number','$email_address','$studying_class')";
+
+    $query_result = $db_connection->query($student_insertion_sql);
+//    echo $query_result;
+
+    if ($query_result == 1) {
+
+        //Insertion Success
+        header("Location: index.php?message=success");
+        exit();
+
+    } else {
+
+        //Insertion Failure
+        header("Location: registration.php?message=failure");
+        exit();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,21 +66,27 @@ MAIN CONTENT
 
         <form class="form-login" action="registration.php" method="post">
             <h2 class="form-login-heading">Registration</h2>
+            <?php
+            if (isset($_GET['message']) && $_GET['message'] == 'failure') {
+
+                echo '            <div class="alert alert-danger"><b>Oh snap!</b> Change a few things up and try submitting again...</div>';
+            }
+            ?>
             <div class="login-wrap">
-                <input type="text" class="form-control" placeholder="Full Name" autofocus>
+                <input type="text" class="form-control" placeholder="Full Name" name="full_name" required autofocus>
                 <br>
-                <input type="number" class="form-control" placeholder="Mobile Number">
+                <input type="number" class="form-control" placeholder="Mobile Number" name="mobile_number" required>
                 <br>
-                <input type="email" class="form-control" placeholder="Email Address">
+                <input type="email" class="form-control" placeholder="Email Address" name="email_address" required>
                 <br>
-                <input type="number" class="form-control" placeholder="Studying Class">
+                <input type="number" class="form-control" placeholder="Studying Class" name="studying_class" required>
                 <br>
                 <!--                <label class="checkbox">-->
                 <!--		                <span class="pull-right">-->
                 <!--		                    <a data-toggle="modal" href="index.php#myModal"> Forgot Password?</a>-->
                 <!--		                </span>-->
                 <!--                </label>-->
-                <button class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> REGISTER
+                <button class="btn btn-theme btn-block" type="submit" name="submit"><i class="fa fa-lock"></i> Register
                 </button>
                 <hr>
 

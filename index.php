@@ -36,6 +36,12 @@ MAIN CONTENT
 
         <form class="form-login" action="index.php" method="post">
             <h2 class="form-login-heading">sign in now</h2>
+            <?php
+            if (isset($_GET['message']) && $_GET['message'] == 'success') {
+
+                echo '            <div class="alert alert-success"><b>Well done!</b> You have successfully registered, please wait for confirmation...</div>';
+            }
+            ?>
             <div class="login-wrap">
                 <input type="text" class="form-control" placeholder="User ID" autofocus>
                 <br>

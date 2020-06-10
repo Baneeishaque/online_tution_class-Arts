@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="MySQL for 5.1 - ssquareq_tution_class@149.255.58.44" uuid="28799212-068a-4e9f-ae5f-e05cdf0dd85b">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://149.255.58.44:3306/ssquareq_tution_class</jdbc-url>
+    </data-source>
+  </component>
+</project>
