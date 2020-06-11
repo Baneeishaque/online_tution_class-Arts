@@ -1,8 +1,42 @@
 <?php
+session_start();
 include_once 'db_config.php';
 
-$student_fetch_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `students`,`courses`,`streams` WHERE `status` = 0 AND `studying_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
-//    echo $student_login_sql;
+if (isset($_GET['action'])) {
+
+    if ($_GET['action'] == 'delete-note') {
+
+        $student_id = $_GET['note-id'];
+
+        $student_update_sql = "UPDATE `notes` SET `status`=1 WHERE `note_id`='$student_id'";
+
+//        echo $student_update_sql;
+
+        $student_update_query_result = $db_connection->query($student_update_sql);
+
+        if ($student_update_query_result == 1) {
+
+            //Update Success
+            header("Location: teacher_home.php?message=success");
+            exit();
+
+        } else {
+
+            //Update Failure
+            header("Location: teacher_home.php?message=failure");
+            exit();
+        }
+    }
+}
+
+// If the user is not logged in redirect to the login page...
+if (!isset($_SESSION['teacher_id'])) {
+
+    header('Location: teacher.php');
+    exit;
+}
+
+$student_fetch_sql = "SELECT `note_id`, `teacher_id`, `notes`.`stream_id`, `title`, `description`, `file`, `status`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `notes`,`streams`,`courses` WHERE `notes`.`stream_id`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id` AND `teacher_id`='" . $_SESSION['teacher_id'] . "' AND `status`=0";
 
 $student_fetch_query_result = $db_connection->query($student_fetch_sql);
 ?>
@@ -15,7 +49,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>TIRUR ARTS COLLEGE - Teacher Home</title>
+    <title>TIRUR ARTS COLLEGE - Admin Home</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -75,11 +109,10 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                         <span>Notes</span>
                     </a>
                     <ul class="sub">
-                        <li class="active"><a href="#">All Notes</a></li>
+                        <li class="active"><a href="teacher_home.php">All Notes</a></li>
                         <li><a href="add_note.php">Upload Notes</a></li>
                     </ul>
                 </li>
-
 
             </ul>
             <!-- sidebar menu end-->
@@ -100,7 +133,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                 if ($_GET['message'] == 'success') {
 
                     echo '<br>
-            <div class="alert alert-success"><b>Well done!</b> Student Verified successfully, Credentials : student' . $_GET['random'] . ' & password' . $_GET['random'] . '</div>';
+            <div class="alert alert-success"><b>Well done!</b> Note Deleted successfully...</div>';
 
                 } elseif ($_GET['message'] == 'failure') {
 
@@ -110,7 +143,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
             }
             ?>
 
-            <h3>All Notes</h3>
+            <h3>Notes</h3>
 
             <div class="row mt">
                 <div class="col-md-12">
@@ -119,7 +152,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
 
                             <thead>
                             <tr>
-                                <th><i class="fa fa-bullhorn"></i> Sl. No.</th>
+                                <th><i class="fa fa-bullhorn"></i> Sl. No</th>
                                 <th class="hidden-phone"><i class="fa fa-question-circle"></i> Course</th>
                                 <th class="hidden-phone"><i class="fa fa-question-circle"></i> Title</th>
                                 <th><i class="fa fa-bookmark"></i> Description</th>
@@ -128,16 +161,19 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                             </thead>
                             <tbody>
                             <?php
+                            $i = 1;
                             while ($student_fetch_query_result_row = mysqli_fetch_assoc($student_fetch_query_result)) {
 
-//                                echo '<tr>
-//                                <td><a href="#">' . $student_fetch_query_result_row['full_name'] . '</a></td>
-//                                <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
-//                                <td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
-//                                <td>
-//                                    <a href="admin_home.php?action=verify-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
-//                                </td>
-//                            </tr>';
+                                echo '<tr>
+                                <td>' . $i . '</td>
+                                <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
+                                <td>' . $student_fetch_query_result_row['title'] . '</td>
+                                <td>' . $student_fetch_query_result_row['description'] . '</td>
+                                <td>
+                                <a href="notes/' . $student_fetch_query_result_row['file'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
+                                    <a href="teacher_home.php?action=delete-note&note-id=' . $student_fetch_query_result_row['note_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button></a>
+                                </td>
+                            </tr>';
                             }
                             ?>
 

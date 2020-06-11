@@ -116,7 +116,7 @@ if (!isset($_SESSION['teacher_id'])) {
                         <span>Notes</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="#">All Notes</a></li>
+                        <li><a href="teacher_home.php">All Notes</a></li>
                         <li class="active"><a href="#">Upload Notes</a></li>
                     </ul>
                 </li>
