@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once 'db_config.php';
 if (isset($_POST['submit'])) {
 
@@ -8,7 +9,7 @@ if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $student_login_sql = "SELECT `teacher_id`, `full_name`, `mobile_number`, `email_address`, `teaching_class`, `status`, `username`, `password` FROM `teachers` WHERE `username`='$username' AND `password`='$password'";
+    $student_login_sql = "SELECT `teacher_id`, `full_name`, `mobile_number`, `email_address`, `teaching_class`, `status`, `username`, `password`,`stream_id`,`stream_name`,`courses`.`course_id`,`course_name` FROM `teachers`,`streams`,`courses` WHERE `teaching_class`=`stream_id` AND `courses`.`course_id`=`streams`.`course_id` AND `username`='$username' AND `password`='$password'";
 //    echo $student_login_sql;
 
     $student_login_query_result = $db_connection->query($student_login_sql);
@@ -22,7 +23,12 @@ if (isset($_POST['submit'])) {
 
     } else {
 
+        $student_login_query_result_row = mysqli_fetch_assoc($student_login_query_result);
+
         //Goto Teacher Home
+        $_SESSION['teacher_id'] = $student_login_query_result_row['teacher_id'];
+        $_SESSION['stream_id'] = $student_login_query_result_row['stream_id'];
+        $_SESSION['teaching_stream'] = $student_login_query_result_row['course_name'] . ' ' . $student_login_query_result_row['stream_name'];
         header("Location: teacher_home.php");
         exit();
     }

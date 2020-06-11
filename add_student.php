@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
     if ($student_insertion_query_result == 1) {
 
         //Insertion Success
-        header("Location: add_student.php?message=success");
+        header("Location: add_student.php?message=success?message=success&random=$random_number");
         exit();
 
     } else {

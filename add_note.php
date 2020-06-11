@@ -1,10 +1,51 @@
 <?php
+session_start();
 include_once 'db_config.php';
 
-$student_fetch_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `students`,`courses`,`streams` WHERE `status` = 0 AND `studying_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
-//    echo $student_login_sql;
+if (isset($_POST['submit'])) {
 
-$student_fetch_query_result = $db_connection->query($student_fetch_sql);
+//    echo 'from submission section';
+
+    //TODO : Unique Mobile Number - db
+    //TODO : Unique Email ID - db
+
+    $stream_id = $_POST['stream_id'];
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $note_file = $_POST['note_file'];
+
+    $target_dir = "notes/";
+    $file_name = $_FILES["note_file"]["name"];
+    $target_file = $target_dir . basename($_FILES["note_file"]["name"]);
+    move_uploaded_file($_FILES["note_file"]["tmp_name"], $target_file);
+
+    $student_insertion_sql = "INSERT INTO `notes`(`teacher_id`, `stream_id`, `title`, `description`, `file`) VALUES ('" . $_SESSION['teacher_id'] . "','$stream_id','$title','$description','$file_name')";
+//    echo $student_insertion_sql;
+
+    $student_insertion_query_result = $db_connection->query($student_insertion_sql);
+//    echo $student_insertion_query_result;
+
+    if ($student_insertion_query_result == 1) {
+
+        //Insertion Success
+        header("Location: add_note.php?message=success");
+        exit();
+
+    } else {
+
+        //Insertion Failure
+        header("Location: add_note.php?message=failure");
+        exit();
+    }
+}
+
+// If the user is not logged in redirect to the login page...
+if (!isset($_SESSION['teacher_id'])) {
+
+    header('Location: teacher.php');
+    exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +56,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>TIRUR ARTS COLLEGE - Teacher Home</title>
+    <title>TIRUR ARTS COLLEGE - Admin : Add Students</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -75,8 +116,8 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                         <span>Notes</span>
                     </a>
                     <ul class="sub">
-                        <li class="active"><a href="#">All Notes</a></li>
-                        <li><a href="add_note.php">Upload Notes</a></li>
+                        <li><a href="#">All Notes</a></li>
+                        <li class="active"><a href="#">Upload Notes</a></li>
                     </ul>
                 </li>
 
@@ -100,7 +141,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                 if ($_GET['message'] == 'success') {
 
                     echo '<br>
-            <div class="alert alert-success"><b>Well done!</b> Student Verified successfully, Credentials : student' . $_GET['random'] . ' & password' . $_GET['random'] . '</div>';
+            <div class="alert alert-success"><b>Well done!</b> Note Uploaded successfully...';
 
                 } elseif ($_GET['message'] == 'failure') {
 
@@ -110,42 +151,54 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
             }
             ?>
 
-            <h3>All Notes</h3>
+            <h3>Add Notes</h3>
 
             <div class="row mt">
-                <div class="col-md-12">
-                    <div class="content-panel">
-                        <table class="table table-striped table-advance table-hover">
+                <div class="col-lg-12">
+                    <div class="form-panel">
+                        <form class="form-horizontal tasi-form" method="post" action="add_note.php"
+                              enctype="multipart/form-data">
+                            <input type="hidden" name="stream_id" value="<?php echo $_SESSION['stream_id'] ?>">
+                            <div class="form-group has-success">
+                                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Course</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputSuccess" name="course_name"
+                                           value="<?php echo $_SESSION['teaching_stream'] ?>"
+                                           required disabled>
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Title</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputSuccess" name="title" required>
+                                </div>
+                            </div>
+                            <div class="form-group has-error">
+                                <label class="col-sm-2 control-label col-lg-2" for="inputError">Description</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputError" name="description">
+                                </div>
+                            </div>
+                            <div class="form-group has-error">
+                                <label class="col-sm-2 control-label col-lg-2" for="inputError">File</label>
+                                <div class="col-lg-10">
+                                    <input type="file" class="form-control" id="inputError" name="note_file" required>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group has-error">
 
-                            <thead>
-                            <tr>
-                                <th><i class="fa fa-bullhorn"></i> Sl. No.</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Course</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Title</th>
-                                <th><i class="fa fa-bookmark"></i> Description</th>
-                                <th><i class=" fa fa-edit"></i> Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                            while ($student_fetch_query_result_row = mysqli_fetch_assoc($student_fetch_query_result)) {
-
-//                                echo '<tr>
-//                                <td><a href="#">' . $student_fetch_query_result_row['full_name'] . '</a></td>
-//                                <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
-//                                <td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
-//                                <td>
-//                                    <a href="admin_home.php?action=verify-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
-//                                </td>
-//                            </tr>';
-                            }
-                            ?>
-
-                            </tbody>
-                        </table>
-                    </div><!-- /content-panel -->
-                </div><!-- /col-md-12 -->
-            </div><!-- /row -->
+                                <center>
+                                    <a href="add_student.php">
+                                        <button type="button" class="btn btn-danger">Reset</button>
+                                    </a>
+                                    <button class="btn btn-success" type="submit" name="submit">Submit</button>
+                                </center>
+                            </div>
+                        </form>
+                    </div><!-- /form-panel -->
+                </div><!-- /col-lg-12 -->
+            </div>
 
         </section>
         <!-- /wrapper -->
