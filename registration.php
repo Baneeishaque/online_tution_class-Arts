@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
     if ($student_insertion_query_result == 1) {
 
         //Insertion Success
-        header("Location: index.php?message=success");
+        header("Location: student.php?message=success");
         exit();
 
     } else {
@@ -129,7 +129,7 @@ MAIN CONTENT
 
                 <div class="registration">
                     Already have an account?<br/>
-                    <a class="" href="index.php">
+                    <a class="" href="student.php">
                         Login to your account
                     </a>
                 </div>

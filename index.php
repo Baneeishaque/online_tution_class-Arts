@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
     if (mysqli_num_rows($student_login_query_result) == 0) {
 
         //No User
-        header("Location: index.php?message=no_user");
+        header("Location: student.php?message=no_user");
         exit();
 
     } else {
@@ -27,13 +27,13 @@ if (isset($_POST['submit'])) {
         if ($student_login_query_result_row['status'] == 0) {
 
             //Unverified User
-            header("Location: index.php?message=unverified_user");
+            header("Location: student.php?message=unverified_user");
             exit();
 
         } else if ($student_login_query_result_row['status'] == 2) {
 
             //Unverified User
-            header("Location: index.php?message=suspended_user");
+            header("Location: student.php?message=suspended_user");
             exit();
 
         } else {
@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>TIRUR ARTS COLLEGE - Student Authentication</title>
+    <title>TIRUR ARTS COLLEGE - Authentication</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -79,7 +79,7 @@ MAIN CONTENT
 <div id="login-page">
     <div class="container">
 
-        <form class="form-login" action="index.php" method="post">
+        <form class="form-login" action="student.php" method="post">
             <h2 class="form-login-heading">sign in now</h2>
             <?php
             if (isset($_GET['message'])) {
@@ -103,19 +103,44 @@ MAIN CONTENT
             }
             ?>
             <div class="login-wrap">
-                <input type="text" class="form-control" placeholder="User ID" name="username" required autofocus>
-                <br>
-                <input type="password" class="form-control" placeholder="Password" name="password" required>
-                <br>
+                <!--                <input type="text" class="form-control" placeholder="User ID" name="username" required autofocus>-->
+                <!--                <br>-->
+                <!--                <input type="password" class="form-control" placeholder="Password" name="password" required>-->
+                <!--                <br>-->
 
-                <button class="btn btn-theme btn-block" type="submit" name="submit"><i class="fa fa-lock"></i> Sign In
-                </button>
+                <a href="student.php">
+                    <button class="btn btn-theme btn-block" type="button" name="submit"><i class="fa fa-lock"></i>
+                        Student Sign
+                        In
+                    </button>
+                </a>
+                <hr>
+                <a href="teacher.php">
+                    <button class="btn btn-theme btn-block" type="button" name="submit"><i class="fa fa-lock"></i>
+                        Teacher Sign
+                        In
+                    </button>
+                </a>
+                <hr>
+                <a href="#">
+                    <button class="btn btn-theme btn-block" type="button" name="submit"><i class="fa fa-lock"></i>
+                        Parent Sign
+                        In
+                    </button>
+                </a>
+                <hr>
+                <a href="admin.php">
+                    <button class="btn btn-theme btn-block" type="button" name="submit"><i class="fa fa-lock"></i>
+                        Administrator Sign
+                        In
+                    </button>
+                </a>
                 <hr>
 
                 <div class="registration">
                     Don't have an account yet?<br/>
                     <a class="" href="registration.php">
-                        Create an account
+                        Create an account (Students Only)
                     </a>
                 </div>
 

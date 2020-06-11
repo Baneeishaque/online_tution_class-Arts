@@ -70,12 +70,12 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
         </div>
         <!--logo start-->
-        <a class="logo" href="index_backup.html"><b>TIRUR ARTS COLLEGE</b></a>
+        <a class="logo" href="#"><b>TIRUR ARTS COLLEGE</b></a>
         <!--logo end-->
 
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
-                <li><a class="logout" href="index.php">Logout</a></li>
+                <li><a class="logout" href="student.php">Logout</a></li>
             </ul>
         </div>
     </header>
@@ -130,7 +130,17 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                         <li><a href="add_stream.php">Add Streams</a></li>
                     </ul>
                 </li>
-
+                <li class="sub-menu">
+                    <a href="javascript:">
+                        <i class=" fa fa-bar-chart-o"></i>
+                        <span>Parents</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="#">All Parents</a></li>
+                        <li><a href="#">Assign Parents</a></li>
+                        <li><a href="#">Add Parents</a></li>
+                    </ul>
+                </li>
             </ul>
             <!-- sidebar menu end-->
         </div>

@@ -8,7 +8,7 @@ if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $student_login_sql = "SELECT `teacher_id`, `full_name`, `mobile_number`, `email_address`, `teaching_class`, `status`, `username`, `password` FROM `teachers` WHERE `username`='$username' AND `password`='$password'";
+    $student_login_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `studying_class`, `status`, `username`, `password` FROM `students` WHERE `username`='$username' AND `password`='$password'";
 //    echo $student_login_sql;
 
     $student_login_query_result = $db_connection->query($student_login_sql);
@@ -17,12 +17,29 @@ if (isset($_POST['submit'])) {
     if (mysqli_num_rows($student_login_query_result) == 0) {
 
         //No User
-        header("Location: teacher.php?message=no_user");
+        header("Location: student.php?message=no_user");
         exit();
 
     } else {
 
-        //Goto Teacher Home
+        $student_login_query_result_row = mysqli_fetch_assoc($student_login_query_result);
+//        var_dump($student_login_query_result_row);
+        if ($student_login_query_result_row['status'] == 0) {
+
+            //Unverified User
+            header("Location: student.php?message=unverified_user");
+            exit();
+
+        } else if ($student_login_query_result_row['status'] == 2) {
+
+            //Unverified User
+            header("Location: student.php?message=suspended_user");
+            exit();
+
+        } else {
+
+            //Goto Home
+        }
     }
 }
 ?>
@@ -35,7 +52,7 @@ if (isset($_POST['submit'])) {
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>TIRUR ARTS COLLEGE - Teacher Authentication</title>
+    <title>TIRUR ARTS COLLEGE - Student Authentication</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -62,15 +79,26 @@ MAIN CONTENT
 <div id="login-page">
     <div class="container">
 
-        <form class="form-login" action="teacher.php" method="post">
-            <h2 class="form-login-heading">authentication</h2>
+        <form class="form-login" action="student.php" method="post">
+            <h2 class="form-login-heading">sign in now</h2>
             <?php
             if (isset($_GET['message'])) {
 
-                if ($_GET['message'] == 'no_user') {
+                if ($_GET['message'] == 'success') {
+
+                    echo '            <div class="alert alert-success"><b>Well done!</b> You have successfully registered, please wait for confirmation...</div>';
+
+                } else if ($_GET['message'] == 'no_user') {
 
                     echo '            <div class="alert alert-danger"><b>Oh snap!</b> Invalid credentials...</div>';
 
+                } else if ($_GET['message'] == 'unverified_user') {
+
+                    echo '<div class="alert alert-warning"><b>Warning!</b> Better check yourself, you\'re not verified yet...</div>';
+
+                } else if ($_GET['message'] == 'suspended_user') {
+
+                    echo '<div class="alert alert-warning"><b>Warning!</b> Better check with authorities, you\'re suspended...</div>';
                 }
             }
             ?>
@@ -82,6 +110,14 @@ MAIN CONTENT
 
                 <button class="btn btn-theme btn-block" type="submit" name="submit"><i class="fa fa-lock"></i> Sign In
                 </button>
+                <hr>
+
+                <div class="registration">
+                    Don't have an account yet?<br/>
+                    <a class="" href="registration.php">
+                        Create an account
+                    </a>
+                </div>
 
             </div>
 
