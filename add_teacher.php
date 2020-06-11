@@ -11,57 +11,26 @@ if (isset($_POST['submit'])) {
     $full_name = $_POST['full_name'];
     $mobile_number = $_POST['mobile_number'];
     $email_address = $_POST['email_address'];
-    $studying_class = $_POST['studying_class'];
+    $teaching_class = $_POST['teaching_class'];
 
-    $student_insertion_sql = "INSERT INTO `students`(`full_name`, `mobile_number`, `email_address`, `studying_class`,`status`) VALUES ('$full_name','$mobile_number','$email_address','$studying_class',1)";
-//    echo $student_insertion_sql;
+    $teacher_insertion_sql = "INSERT INTO `teachers`(`full_name`, `mobile_number`, `email_address`, `teaching_class`,`status`) VALUES ('$full_name','$mobile_number','$email_address','$teaching_class',1)";
 
-    $student_insertion_query_result = $db_connection->query($student_insertion_sql);
-//    echo $student_insertion_query_result;
+    $teacher_insertion_query_result = $db_connection->query($teacher_insertion_sql);
 
-    if ($student_insertion_query_result == 1) {
+    if ($teacher_insertion_query_result == 1) {
 
         //Insertion Success
-        header("Location: add_student.php?message=success");
+        header("Location: add_teacher.php?message=success");
         exit();
 
     } else {
 
         //Insertion Failure
-        header("Location: add_student.php?message=failure");
+        header("Location: add_teacher.php?message=failure");
         exit();
     }
 }
 
-//if (isset($_GET['action'])) {
-//
-//    if ($_GET['action'] == 'verify-student') {
-//
-//        $student_id = $_GET['student-id'];
-//
-//        $student_update_sql = "UPDATE `students` SET `status`=1 WHERE `student_id`='$student_id'";
-//
-//        $student_update_query_result = $db_connection->query($student_update_sql);
-//
-//        if ($student_update_query_result == 1) {
-//
-//            //Update Success
-//            header("Location: admin_home.php?message=success");
-//            exit();
-//
-//        } else {
-//
-//            //Update Failure
-//            header("Location: admin_home.php?message=failure");
-//            exit();
-//        }
-//    }
-//}
-//
-//$student_fetch_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `students`,`courses`,`streams` WHERE `status` = 0 AND `studying_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
-////    echo $student_login_sql;
-//
-//$student_fetch_query_result = $db_connection->query($student_fetch_sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +41,7 @@ if (isset($_POST['submit'])) {
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>TANUR ARTS COLLEGE - Admin : Add Students</title>
+    <title>TANUR ARTS COLLEGE - Admin : Add Teachers</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -135,7 +104,7 @@ if (isset($_POST['submit'])) {
                         <li><a href="admin_students.php">Current Students</a></li>
                         <li><a href="admin_home.php">Unverified Students</a></li>
                         <li><a href="suspended_students.php">Suspended Students</a></li>
-                        <li class="active"><a href="add_student.php">Add Students</a></li>
+                        <li><a href="add_student.php">Add Students</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -147,7 +116,7 @@ if (isset($_POST['submit'])) {
                         <li><a href="admin_teachers.php">Current Teachers</a></li>
                         <li><a href="assign_teachers.php">Assign Teachers</a></li>
                         <!-- <li><a href="admin_unverified_teachers.php">Unverified Teachers</a></li> -->
-                        <li><a href="add_teacher.php">Add Teachers</a></li>
+                        <li class="active"><a href="add_teacher.php">Add Teachers</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -182,7 +151,7 @@ if (isset($_POST['submit'])) {
                 if ($_GET['message'] == 'success') {
 
                     echo '<br>
-            <div class="alert alert-success"><b>Well done!</b> Student Added successfully...</div>';
+            <div class="alert alert-success"><b>Well done!</b> Teacher Added successfully...</div>';
 
                 } elseif ($_GET['message'] == 'failure') {
 
@@ -192,51 +161,12 @@ if (isset($_POST['submit'])) {
             }
             ?>
 
-            <h3>Add Student</h3>
-
-            <!--            <div class="row mt">-->
-            <!--                <div class="col-md-12">-->
-            <!--                    <div class="content-panel">-->
-            <!--                        <table class="table table-striped table-advance table-hover">-->
-            <!---->
-            <!--                            <thead>-->
-            <!--                            <tr>-->
-            <!--                                <th><i class="fa fa-bullhorn"></i> Full Name</th>-->
-            <!--                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Studying Course</th>-->
-            <!--                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Studying Stream</th>
--->
-            <!--                                <th><i class="fa fa-bookmark"></i> Mobile Number</th>-->
-            <!--                                <th><i class=" fa fa-edit"></i> Actions</th>-->
-            <!--                            </tr>-->
-            <!--                            </thead>-->
-            <!--                            <tbody>-->
-            <!--                            --><?php
-            //                            while ($student_fetch_query_result_row = mysqli_fetch_assoc($student_fetch_query_result)) {
-            //
-            //                                echo '<tr>
-            //                                <td><a href="#">' . $student_fetch_query_result_row['full_name'] . '</a></td>
-            //                                <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
-            //                                <td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
-            //                                <td>
-            //                                    <a href="admin_home.php?action=verify-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
-            //                                </td>
-            //                            </tr>';
-            //                            }
-            //                            ?>
-            <!---->
-            <!--                            </tbody>-->
-            <!--                        </table>-->
-            <!--                    </div>-->
-            <!-- /content-panel -->
-            <!--                </div>-->
-            <!-- /col-md-12 -->
-            <!--            </div>-->
-            <!-- /row -->
+            <h3>Add Teacher</h3>
 
             <div class="row mt">
                 <div class="col-lg-12">
                     <div class="form-panel">
-                        <form class="form-horizontal tasi-form" method="post" action="add_student.php">
+                        <form class="form-horizontal tasi-form" method="post" action="add_teacher.php">
                             <div class="form-group has-success">
                                 <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Full Name</label>
                                 <div class="col-lg-10">
@@ -260,7 +190,7 @@ if (isset($_POST['submit'])) {
                             <div class="form-group">
                                 <label class="col-sm-2 control-label col-lg-2">Course</label>
                                 <div class="col-lg-10">
-                                    <select class="form-control" name="studying_class" id="studying_course">
+                                    <select class="form-control" name="teaching_class" id="studying_course">
                                         <option value="NA">Select Please...</option>
                                         <?php
 
@@ -279,12 +209,9 @@ if (isset($_POST['submit'])) {
 
                             <br>
                             <div class="form-group has-error">
-                                <!--                                <label class="col-sm-2 control-label col-lg-2" for="inputError">Class</label>-->
-                                <!--                                <div class="col-lg-10">-->
-                                <!--                                    <input type="number" class="form-control" id="inputError">-->
-                                <!--                                </div>-->
+
                                 <center>
-                                    <a href="add_student.php">
+                                    <a href="add_teacher.php">
                                         <button type="button" class="btn btn-danger">Reset</button>
                                     </a>
                                     <button class="btn btn-success" type="submit" name="submit">Submit</button>

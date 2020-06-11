@@ -1,35 +1,35 @@
 <?php
 include_once 'db_config.php';
 
-if (isset($_GET['action'])) {
+//if (isset($_GET['action'])) {
+//
+//    if ($_GET['action'] == 'suspend-student') {
+//
+//        $student_id = $_GET['student-id'];
+//
+//        $student_update_sql = "UPDATE `students` SET `status`=2 WHERE `student_id`='$student_id'";
+//
+//        $student_update_query_result = $db_connection->query($student_update_sql);
+//
+//        if ($student_update_query_result == 1) {
+//
+//            //Update Success
+//            header("Location: admin_students.php?message=success");
+//            exit();
+//
+//        } else {
+//
+//            //Update Failure
+//            header("Location: admin_students.php?message=failure");
+//            exit();
+//        }
+//    }
+//}
 
-    if ($_GET['action'] == 'suspend-student') {
+$teacher_fetch_sql = "SELECT `teacher_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `teachers`,`courses`,`streams` WHERE `status` = 1 AND `teaching_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
+//echo $teacher_fetch_sql;
 
-        $student_id = $_GET['student-id'];
-
-        $student_update_sql = "UPDATE `students` SET `status`=2 WHERE `student_id`='$student_id'";
-
-        $student_update_query_result = $db_connection->query($student_update_sql);
-
-        if ($student_update_query_result == 1) {
-
-            //Update Success
-            header("Location: admin_students.php?message=success");
-            exit();
-
-        } else {
-
-            //Update Failure
-            header("Location: admin_students.php?message=failure");
-            exit();
-        }
-    }
-}
-
-$student_fetch_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `students`,`courses`,`streams` WHERE `status` = 1 AND `studying_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
-//    echo $student_login_sql;
-
-$student_fetch_query_result = $db_connection->query($student_fetch_sql);
+$teacher_fetch_query_result = $db_connection->query($teacher_fetch_sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +40,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>TANUR ARTS COLLEGE - Admin Home</title>
+    <title>TANUR ARTS COLLEGE - Current Teachers</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -100,7 +100,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                         <span>Students</span>
                     </a>
                     <ul class="sub">
-                        <li class="active"><a href="admin_students.php">Current Students</a></li>
+                        <li><a href="admin_students.php">Current Students</a></li>
                         <li><a href="admin_home.php">Unverified Students</a></li>
                         <li><a href="suspended_students.php">Suspended Students</a></li>
                         <li><a href="add_student.php">Add Students</a></li>
@@ -112,7 +112,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                         <span>Teachers</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="admin_teachers.php">Current Teachers</a></li>
+                        <li class="active"><a href="admin_teachers.php">Current Teachers</a></li>
                         <li><a href="assign_teachers.php">Assign Teachers</a></li>
                         <!-- <li><a href="admin_unverified_teachers.php">Unverified Teachers</a></li> -->
                         <li><a href="add_teacher.php">Add Teachers</a></li>
@@ -145,22 +145,22 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
         <section class="wrapper">
 
             <?php
-            if (isset($_GET['message'])) {
-
-                if ($_GET['message'] == 'success') {
-
-                    echo '<br>
-            <div class="alert alert-success"><b>Well done!</b> Student Suspended successfully...</div>';
-
-                } elseif ($_GET['message'] == 'failure') {
-
-                    echo '<br>
-            <div class="alert alert-danger"><b>Oh snap!</b> Try Again...</div>';
-                }
-            }
+            //            if (isset($_GET['message'])) {
+            //
+            //                if ($_GET['message'] == 'success') {
+            //
+            //                    echo '<br>
+            //            <div class="alert alert-success"><b>Well done!</b> Student Suspended successfully...</div>';
+            //
+            //                } elseif ($_GET['message'] == 'failure') {
+            //
+            //                    echo '<br>
+            //            <div class="alert alert-danger"><b>Oh snap!</b> Try Again...</div>';
+            //                }
+            //            }
             ?>
 
-            <h3>Current Students</h3>
+            <h3>Current Teachers</h3>
 
             <div class="row mt">
                 <div class="col-md-12">
@@ -170,23 +170,29 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                             <thead>
                             <tr>
                                 <th><i class="fa fa-bullhorn"></i> Full Name</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Studying Course</th>
+                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Course</th>
                                 <!--                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Studying Stream</th>-->
                                 <th><i class="fa fa-bookmark"></i> Mobile Number</th>
-                                <th><i class=" fa fa-edit"></i> Actions</th>
+                                <!--                                <th><i class=" fa fa-edit"></i> Actions</th>-->
                             </tr>
                             </thead>
                             <tbody>
                             <?php
-                            while ($student_fetch_query_result_row = mysqli_fetch_assoc($student_fetch_query_result)) {
+                            while ($teacher_fetch_query_result_row = mysqli_fetch_assoc($teacher_fetch_query_result)) {
+
+//                                echo '<tr>
+//                                <td><a href="#">' . $student_fetch_query_result_row['full_name'] . '</a></td>
+//                                <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
+//                                <td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
+//                                <td>
+//                                      <a href="admin_students.php?action=suspend-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></a>
+//                                  </td>
+//                            </tr>';
 
                                 echo '<tr>
-                                <td><a href="#">' . $student_fetch_query_result_row['full_name'] . '</a></td>
-                                <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
-                                <td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
-                                <td>
-                                      <a href="admin_students.php?action=suspend-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></a>
-                                  </td>
+                                <td><a href="#">' . $teacher_fetch_query_result_row['full_name'] . '</a></td>
+                                <td>' . $teacher_fetch_query_result_row['course_name'] . ' ' . $teacher_fetch_query_result_row['stream_name'] . '</td>
+                                <td>' . $teacher_fetch_query_result_row['mobile_number'] . '</td>
                             </tr>';
                             }
                             ?>
