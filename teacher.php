@@ -23,6 +23,8 @@ if (isset($_POST['submit'])) {
     } else {
 
         //Goto Teacher Home
+        header("Location: teacher_home.php");
+        exit();
     }
 }
 ?>

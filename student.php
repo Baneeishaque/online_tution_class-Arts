@@ -39,6 +39,8 @@ if (isset($_POST['submit'])) {
         } else {
 
             //Goto Home
+            header("Location: student_home.php");
+            exit();
         }
     }
 }
