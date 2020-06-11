@@ -124,10 +124,11 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                         <span>Courses</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="admin_courses.php">All Courses</a></li>
-                        <li><a href="add_course.php">Add Courses</a></li>
-                        <li><a href="admin_streams.php">All Streams</a></li>
-                        <li><a href="add_stream.php">Add Streams</a></li>
+                        <li><a href="#">All Courses</a></li>
+                        <li><a href="#">Add Courses</a></li>
+                        <li><a href="#">All Streams</a></li>
+                        >
+                        <li><a href="#">Add Streams</a></li>
                     </ul>
                 </li>
 

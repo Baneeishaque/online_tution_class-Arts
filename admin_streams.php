@@ -26,7 +26,7 @@ if (isset($_GET['action'])) {
     }
 }
 
-$student_fetch_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `students`,`courses`,`streams` WHERE `status` = 1 AND `studying_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
+$student_fetch_sql = "SELECT `stream_id`, `stream_name` FROM `streams`";
 //    echo $student_login_sql;
 
 $student_fetch_query_result = $db_connection->query($student_fetch_sql);
@@ -95,12 +95,12 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                 <h5 class="centered">Administrator</h5>
 
                 <li class="sub-menu">
-                    <a class="active" href="javascript:">
+                    <a href="javascript:">
                         <i class="fa fa-th"></i>
                         <span>Students</span>
                     </a>
                     <ul class="sub">
-                        <li class="active"><a href="admin_students.php">Current Students</a></li>
+                        <li><a href="admin_students.php">Current Students</a></li>
                         <li><a href="admin_home.php">Unverified Students</a></li>
                         <li><a href="suspended_students.php">Suspended Students</a></li>
                         <li><a href="add_student.php">Add Students</a></li>
@@ -119,15 +119,14 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:">
+                    <a class="active" href="javascript:">
                         <i class=" fa fa-bar-chart-o"></i>
                         <span>Courses</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="#">All Courses</a></li>
+                        <li><a href="admin_courses.php">All Courses</a></li>
                         <li><a href="#">Add Courses</a></li>
-                        <li><a href="#">All Streams</a></li>
-                        >
+                        <li class="active"><a href="admin_streams.php">All Streams</a></li>
                         <li><a href="#">Add Streams</a></li>
                     </ul>
                 </li>
@@ -171,7 +170,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
             }
             ?>
 
-            <h3>Current Students</h3>
+            <h3>Current Streams</h3>
 
             <div class="row mt">
                 <div class="col-md-12">
@@ -180,11 +179,8 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
 
                             <thead>
                             <tr>
-                                <th><i class="fa fa-bullhorn"></i> Full Name</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Studying Course</th>
-                                <!--                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Studying Stream</th>-->
-                                <th><i class="fa fa-bookmark"></i> Mobile Number</th>
-                                <th><i class=" fa fa-edit"></i> Actions</th>
+                                <th><i class="fa fa-bullhorn"></i> Sl. No.</th>
+                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Course Name</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -192,12 +188,8 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                             while ($student_fetch_query_result_row = mysqli_fetch_assoc($student_fetch_query_result)) {
 
                                 echo '<tr>
-                                <td><a href="#">' . $student_fetch_query_result_row['full_name'] . '</a></td>
-                                <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
-                                <td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
-                                <td>
-                                      <a href="admin_students.php?action=suspend-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></a>
-                                  </td>
+                                <td><a href="#">' . $student_fetch_query_result_row['stream_id'] . '</a></td>
+                                <td>' . $student_fetch_query_result_row['stream_name'] . '</td>
                             </tr>';
                             }
                             ?>
