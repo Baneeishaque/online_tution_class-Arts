@@ -43,7 +43,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>TANUR ARTS COLLEGE - Admin Home</title>
+    <title>TIRUR ARTS COLLEGE - Admin Home</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -73,7 +73,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
         </div>
         <!--logo start-->
-        <a class="logo" href="index_backup.html"><b>TANUR ARTS COLLEGE</b></a>
+        <a class="logo" href="index_backup.html"><b>TIRUR ARTS COLLEGE</b></a>
         <!--logo end-->
 
         <div class="top-menu">
@@ -208,7 +208,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
     <!--footer start-->
     <footer class="site-footer">
         <div class="text-center">
-            2020 - Tanur Arts College
+            2020 - Tirur Arts College
             <a href="admin_home.php" class="go-top">
                 <i class="fa fa-angle-up"></i>
             </a>

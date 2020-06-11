@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>TANUR ARTS COLLEGE - Administrator Authentication</title>
+    <title>TIRUR ARTS COLLEGE - Administrator Authentication</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
