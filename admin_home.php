@@ -7,14 +7,17 @@ if (isset($_GET['action'])) {
 
         $student_id = $_GET['student-id'];
 
-        $student_update_sql = "UPDATE `students` SET `status`=1 WHERE `student_id`='$student_id'";
+        $random_number = rand(0, 999);
+        $student_update_sql = "UPDATE `students` SET `status`=1,`username`='student$random_number',`password`='password$random_number' WHERE `student_id`='$student_id'";
+
+//        echo $student_update_sql;
 
         $student_update_query_result = $db_connection->query($student_update_sql);
 
         if ($student_update_query_result == 1) {
 
             //Update Success
-            header("Location: admin_home.php?message=success");
+            header("Location: admin_home.php?message=success&random=$random_number");
             exit();
 
         } else {
@@ -150,7 +153,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                 if ($_GET['message'] == 'success') {
 
                     echo '<br>
-            <div class="alert alert-success"><b>Well done!</b> Student Verified successfully...</div>';
+            <div class="alert alert-success"><b>Well done!</b> Student Verified successfully, Credentials : student' . $_GET['random'] . ' & password' . $_GET['random'] . '</div>';
 
                 } elseif ($_GET['message'] == 'failure') {
 

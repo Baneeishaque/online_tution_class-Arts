@@ -13,7 +13,8 @@ if (isset($_POST['submit'])) {
     $email_address = $_POST['email_address'];
     $studying_class = $_POST['studying_class'];
 
-    $student_insertion_sql = "INSERT INTO `students`(`full_name`, `mobile_number`, `email_address`, `studying_class`,`status`) VALUES ('$full_name','$mobile_number','$email_address','$studying_class',1)";
+    $random_number = rand(0, 999);
+    $student_insertion_sql = "INSERT INTO `students`(`full_name`, `mobile_number`, `email_address`, `studying_class`,`status`,`username`,`password`) VALUES ('$full_name','$mobile_number','$email_address','$studying_class',1,'teacher$random_number','password$random_number')";
 //    echo $student_insertion_sql;
 
     $student_insertion_query_result = $db_connection->query($student_insertion_sql);
@@ -182,7 +183,7 @@ if (isset($_POST['submit'])) {
                 if ($_GET['message'] == 'success') {
 
                     echo '<br>
-            <div class="alert alert-success"><b>Well done!</b> Student Added successfully...</div>';
+            <div class="alert alert-success"><b>Well done!</b> Student Added successfully, Credentials : student' . $_GET['random'] . ' & password' . $_GET['random'] . '</div>';
 
                 } elseif ($_GET['message'] == 'failure') {
 

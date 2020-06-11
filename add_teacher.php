@@ -14,14 +14,15 @@ if (isset($_POST['submit'])) {
 //    $teaching_class = $_POST['teaching_class'];
 
 //    $teacher_insertion_sql = "INSERT INTO `teachers`(`full_name`, `mobile_number`, `email_address`, `teaching_class`,`status`) VALUES ('$full_name','$mobile_number','$email_address','$teaching_class',1)";
-    $teacher_insertion_sql = "INSERT INTO `teachers`(`full_name`, `mobile_number`, `email_address`, `teaching_class`,`status`) VALUES ('$full_name','$mobile_number','$email_address','',1)";
+    $random_number = rand(0, 999);
+    $teacher_insertion_sql = "INSERT INTO `teachers`(`full_name`, `mobile_number`, `email_address`, `teaching_class`,`status`,`username`,`password`) VALUES ('$full_name','$mobile_number','$email_address','',1,'teacher$random_number','password$random_number')";
 
     $teacher_insertion_query_result = $db_connection->query($teacher_insertion_sql);
 
     if ($teacher_insertion_query_result == 1) {
 
         //Insertion Success
-        header("Location: add_teacher.php?message=success");
+        header("Location: add_teacher.php?message=success&random=$random_number");
         exit();
 
     } else {
@@ -152,7 +153,7 @@ if (isset($_POST['submit'])) {
                 if ($_GET['message'] == 'success') {
 
                     echo '<br>
-            <div class="alert alert-success"><b>Well done!</b> Teacher Added successfully...</div>';
+            <div class="alert alert-success"><b>Well done!</b> Teacher Added successfully, Credentials : teacher' . $_GET['random'] . ' & password' . $_GET['random'] . '</div>';
 
                 } elseif ($_GET['message'] == 'failure') {
 
