@@ -39,6 +39,7 @@ if (isset($_POST['submit'])) {
         } else {
 
             //Goto Home
+            $_SESSION['stream_id'] = $student_login_query_result_row['studying_class'];
             header("Location: student_home.php");
             exit();
         }
