@@ -132,7 +132,9 @@ if (isset($_POST['submit'])) {
                         <span>Students</span>
                     </a>
                     <ul class="sub">
+                        <li><a href="admin_students.php">Current Students</a></li>
                         <li><a href="admin_home.php">Unverified Students</a></li>
+                        <li><a href="suspended_students.php">Suspended Students</a></li>
                         <li class="active"><a href="add_student.php">Add Students</a></li>
                     </ul>
                 </li>
@@ -142,7 +144,7 @@ if (isset($_POST['submit'])) {
                         <span>Teachers</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="admin_teachers.php">Our Teachers</a></li>
+                        <li><a href="admin_teachers.php">Current Teachers</a></li>
                         <li><a href="assign_teachers.php">Assign Teachers</a></li>
                         <li><a href="admin_unverified_teachers.php">Unverified Teachers</a></li>
                         <li><a href="add_teacher.php">Add Teachers</a></li>

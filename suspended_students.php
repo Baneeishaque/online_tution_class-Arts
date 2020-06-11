@@ -3,7 +3,7 @@ include_once 'db_config.php';
 
 if (isset($_GET['action'])) {
 
-    if ($_GET['action'] == 'verify-student') {
+    if ($_GET['action'] == 'enable-student') {
 
         $student_id = $_GET['student-id'];
 
@@ -14,19 +14,19 @@ if (isset($_GET['action'])) {
         if ($student_update_query_result == 1) {
 
             //Update Success
-            header("Location: admin_home.php?message=success");
+            header("Location: suspended_students.php?message=success");
             exit();
 
         } else {
 
             //Update Failure
-            header("Location: admin_home.php?message=failure");
+            header("Location: suspended_students.php?message=failure");
             exit();
         }
     }
 }
 
-$student_fetch_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `students`,`courses`,`streams` WHERE `status` = 0 AND `studying_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
+$student_fetch_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `students`,`courses`,`streams` WHERE `status` = 2 AND `studying_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
 //    echo $student_login_sql;
 
 $student_fetch_query_result = $db_connection->query($student_fetch_sql);
@@ -101,8 +101,8 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                     </a>
                     <ul class="sub">
                         <li><a href="admin_students.php">Current Students</a></li>
-                        <li class="active"><a href="admin_home.php">Unverified Students</a></li>
-                        <li><a href="suspended_students.php">Suspended Students</a></li>
+                        <li><a href="admin_home.php">Unverified Students</a></li>
+                        <li class="active"><a href="suspended_students.php">Suspended Students</a></li>
                         <li><a href="add_student.php">Add Students</a></li>
                     </ul>
                 </li>
@@ -150,7 +150,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                 if ($_GET['message'] == 'success') {
 
                     echo '<br>
-            <div class="alert alert-success"><b>Well done!</b> Student Verified successfully...</div>';
+            <div class="alert alert-success"><b>Well done!</b> Student Activated successfully...</div>';
 
                 } elseif ($_GET['message'] == 'failure') {
 
@@ -160,7 +160,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
             }
             ?>
 
-            <h3>Unverified Students</h3>
+            <h3>Current Students</h3>
 
             <div class="row mt">
                 <div class="col-md-12">
@@ -185,8 +185,8 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                                 <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
                                 <td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
                                 <td>
-                                    <a href="admin_home.php?action=verify-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
-                                </td>
+                                      <a href="suspended_students.php?action=enable-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></a>
+                                  </td>
                             </tr>';
                             }
                             ?>

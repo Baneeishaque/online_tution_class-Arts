@@ -30,6 +30,12 @@ if (isset($_POST['submit'])) {
             header("Location: index.php?message=unverified_user");
             exit();
 
+        } else if ($student_login_query_result_row['status'] == 2) {
+
+            //Unverified User
+            header("Location: index.php?message=suspended_user");
+            exit();
+
         } else {
 
             //Goto Home
@@ -89,6 +95,10 @@ MAIN CONTENT
                 } else if ($_GET['message'] == 'unverified_user') {
 
                     echo '<div class="alert alert-warning"><b>Warning!</b> Better check yourself, you\'re not verified yet...</div>';
+
+                } else if ($_GET['message'] == 'suspended_user') {
+
+                    echo '<div class="alert alert-warning"><b>Warning!</b> Better check with authorities, you\'re suspended...</div>';
                 }
             }
             ?>
