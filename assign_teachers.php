@@ -8,26 +8,23 @@ if (isset($_POST['submit'])) {
     //TODO : Unique Mobile Number - db
     //TODO : Unique Email ID - db
 
-    $full_name = $_POST['full_name'];
-    $mobile_number = $_POST['mobile_number'];
-    $email_address = $_POST['email_address'];
-//    $teaching_class = $_POST['teaching_class'];
+    $teacher_id = $_POST['teacher_id'];
+    $teaching_class = $_POST['teaching_class'];
 
-//    $teacher_insertion_sql = "INSERT INTO `teachers`(`full_name`, `mobile_number`, `email_address`, `teaching_class`,`status`) VALUES ('$full_name','$mobile_number','$email_address','$teaching_class',1)";
-    $teacher_insertion_sql = "INSERT INTO `teachers`(`full_name`, `mobile_number`, `email_address`, `teaching_class`,`status`) VALUES ('$full_name','$mobile_number','$email_address','',1)";
+    $teacher_insertion_sql = "UPDATE `teachers` SET `teaching_class`='$teaching_class' WHERE `teacher_id`='$teacher_id'";
 
     $teacher_insertion_query_result = $db_connection->query($teacher_insertion_sql);
 
     if ($teacher_insertion_query_result == 1) {
 
         //Insertion Success
-        header("Location: add_teacher.php?message=success");
+        header("Location: assign_teachers.php?message=success");
         exit();
 
     } else {
 
         //Insertion Failure
-        header("Location: add_teacher.php?message=failure");
+        header("Location: assign_teachers.php?message=failure");
         exit();
     }
 }
@@ -42,7 +39,7 @@ if (isset($_POST['submit'])) {
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>TANUR ARTS COLLEGE - Admin : Add Teachers</title>
+    <title>TANUR ARTS COLLEGE - Admin : Assign Teachers</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -115,9 +112,9 @@ if (isset($_POST['submit'])) {
                     </a>
                     <ul class="sub">
                         <li><a href="admin_teachers.php">Current Teachers</a></li>
-                        <li><a href="assign_teachers.php">Assign Teachers</a></li>
+                        <li class="active"><a href="assign_teachers.php">Assign Teachers</a></li>
                         <!-- <li><a href="admin_unverified_teachers.php">Unverified Teachers</a></li> -->
-                        <li class="active"><a href="add_teacher.php">Add Teachers</a></li>
+                        <li><a href="add_teacher.php">Add Teachers</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -152,7 +149,7 @@ if (isset($_POST['submit'])) {
                 if ($_GET['message'] == 'success') {
 
                     echo '<br>
-            <div class="alert alert-success"><b>Well done!</b> Teacher Added successfully...</div>';
+            <div class="alert alert-success"><b>Well done!</b> Teacher Assigned successfully...</div>';
 
                 } elseif ($_GET['message'] == 'failure') {
 
@@ -162,57 +159,76 @@ if (isset($_POST['submit'])) {
             }
             ?>
 
-            <h3>Add Teacher</h3>
+            <h3>Assign Teacher</h3>
 
             <div class="row mt">
                 <div class="col-lg-12">
                     <div class="form-panel">
-                        <form class="form-horizontal tasi-form" method="post" action="add_teacher.php">
-                            <div class="form-group has-success">
-                                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Full Name</label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="inputSuccess" name="full_name" required>
-                                </div>
-                            </div>
-                            <div class="form-group has-error">
-                                <label class="col-sm-2 control-label col-lg-2" for="inputError">Mobile Number</label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="inputError" name="mobile_number"
-                                           required>
-                                </div>
-                            </div>
-                            <div class="form-group has-warning">
-                                <label class="col-sm-2 control-label col-lg-2" for="inputWarning">Email Address</label>
-                                <div class="col-lg-10">
-                                    <input type="email" class="form-control" id="inputWarning" name="email_address"
-                                           required>
-                                </div>
-                            </div>
-                            <!--                            <div class="form-group">-->
-                            <!--                                <label class="col-sm-2 control-label col-lg-2">Course</label>-->
+                        <form class="form-horizontal tasi-form" method="post" action="assign_teachers.php">
+                            <!--                            <div class="form-group has-success">-->
+                            <!--                                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Full Name</label>-->
                             <!--                                <div class="col-lg-10">-->
-                            <!--                                    <select class="form-control" name="teaching_class" id="studying_course">-->
-                            <!--                                        <option value="NA">Select Please...</option>-->
-                            <!--                                        --><?php
-                            //
-                            //                                        $course_fetch_sql = "SELECT `stream_id`, `stream_name`, `streams`.`course_id`,`course_name` FROM `streams`,`courses` WHERE `courses`.`course_id`=`streams`.`course_id` ORDER BY `course_name`,`stream_name`";
-                            //
-                            //                                        $course_fetch_query_result = $db_connection->query($course_fetch_sql);
-                            //
-                            //                                        while ($course_fetch_query_result_row = mysqli_fetch_assoc($course_fetch_query_result)) {
-                            //
-                            //                                            echo '<option value="' . $course_fetch_query_result_row['stream_id'] . '">' . $course_fetch_query_result_row['course_name'] . ' ' . $course_fetch_query_result_row['stream_name'] . '</option>';
-                            //                                        }
-                            //                                        ?>
-                            <!--                                    </select>-->
+                            <!--                                    <input type="text" class="form-control" id="inputSuccess" name="full_name" required>-->
                             <!--                                </div>-->
                             <!--                            </div>-->
+                            <!--                            <div class="form-group has-error">-->
+                            <!--                                <label class="col-sm-2 control-label col-lg-2" for="inputError">Mobile Number</label>-->
+                            <!--                                <div class="col-lg-10">-->
+                            <!--                                    <input type="text" class="form-control" id="inputError" name="mobile_number"-->
+                            <!--                                           required>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="form-group has-warning">-->
+                            <!--                                <label class="col-sm-2 control-label col-lg-2" for="inputWarning">Email Address</label>-->
+                            <!--                                <div class="col-lg-10">-->
+                            <!--                                    <input type="email" class="form-control" id="inputWarning" name="email_address"-->
+                            <!--                                           required>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label col-lg-2">Course</label>
+                                <div class="col-lg-10">
+                                    <select class="form-control" name="teaching_class" id="studying_course">
+                                        <option value="NA">Select Please...</option>
+                                        <?php
+
+                                        $course_fetch_sql = "SELECT `stream_id`, `stream_name`, `streams`.`course_id`,`course_name` FROM `streams`,`courses` WHERE `courses`.`course_id`=`streams`.`course_id` ORDER BY `course_name`,`stream_name`";
+
+                                        $course_fetch_query_result = $db_connection->query($course_fetch_sql);
+
+                                        while ($course_fetch_query_result_row = mysqli_fetch_assoc($course_fetch_query_result)) {
+
+                                            echo '<option value="' . $course_fetch_query_result_row['stream_id'] . '">' . $course_fetch_query_result_row['course_name'] . ' ' . $course_fetch_query_result_row['stream_name'] . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label col-lg-2">Course</label>
+                                <div class="col-lg-10">
+                                    <select class="form-control" name="teacher_id">
+                                        <option value="NA">Select Please...</option>
+                                        <?php
+
+                                        $course_fetch_sql = "SELECT `teacher_id`, `full_name`, `mobile_number`, `email_address`, `teaching_class`, `status`, `username`, `password` FROM `teachers`";
+
+                                        $course_fetch_query_result = $db_connection->query($course_fetch_sql);
+
+                                        while ($course_fetch_query_result_row = mysqli_fetch_assoc($course_fetch_query_result)) {
+
+                                            echo '<option value="' . $course_fetch_query_result_row['teacher_id'] . '">' . $course_fetch_query_result_row['full_name'] . ' ' . $course_fetch_query_result_row['mobile_number'] . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
 
                             <br>
                             <div class="form-group has-error">
 
                                 <center>
-                                    <a href="add_teacher.php">
+                                    <a href="assign_teachers.php">
                                         <button type="button" class="btn btn-danger">Reset</button>
                                     </a>
                                     <button class="btn btn-success" type="submit" name="submit">Submit</button>
