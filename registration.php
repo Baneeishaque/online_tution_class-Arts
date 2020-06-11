@@ -4,6 +4,9 @@ if (isset($_POST['submit'])) {
 
 //    echo 'from submission section';
 
+    //TODO : Unique Mobile Number - db
+    //TODO : Unique Email ID - db
+
     $full_name = $_POST['full_name'];
     $mobile_number = $_POST['mobile_number'];
     $email_address = $_POST['email_address'];
@@ -37,7 +40,7 @@ if (isset($_POST['submit'])) {
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>DASHGUM - Student Registration</title>
+    <title>TANUR ARTS COLLEGE - Student Registration</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -79,8 +82,46 @@ MAIN CONTENT
                 <br>
                 <input type="email" class="form-control" placeholder="Email Address" name="email_address" required>
                 <br>
-                <input type="number" class="form-control" placeholder="Studying Class" name="studying_class" required>
+
+                <div class="form-group">
+                    <label class="col-sm-2 col-sm-2 control-label">Course</label>
+                </div>
+                <select class="form-control" name="studying_class" id="studying_course">
+                    <option value="NA">Select Please...</option>
+                    <?php
+
+                    $course_fetch_sql = "SELECT `stream_id`, `stream_name`, `streams`.`course_id`,`course_name` FROM `streams`,`courses` WHERE `courses`.`course_id`=`streams`.`course_id` ORDER BY `course_name`,`stream_name`";
+
+                    $course_fetch_query_result = $db_connection->query($course_fetch_sql);
+
+                    while ($course_fetch_query_result_row = mysqli_fetch_assoc($course_fetch_query_result)) {
+
+                        echo '<option value="' . $course_fetch_query_result_row['stream_id'] . '">' . $course_fetch_query_result_row['course_name'] . ' ' . $course_fetch_query_result_row['stream_name'] . '</option>';
+                    }
+                    ?>
+                </select>
                 <br>
+
+                <!--                <div class="form-group">-->
+                <!--                    <label class="col-sm-2 col-sm-2 control-label">Stream</label>-->
+                <!--                </div>-->
+                <!--                <div id="result">-->
+                <!--                    <select class="form-control" name="studying_stream">-->
+                <!--                        <option value="NA">Select Please...</option>-->
+                <!--                        --><?php
+                //
+                //                        $stream_fetch_sql = "SELECT `stream_id`, `stream_name` FROM `streams`";
+                //
+                //                        $stream_fetch_query_result = $db_connection->query($stream_fetch_sql);
+                //
+                //                        while ($stream_fetch_query_result_row = mysqli_fetch_assoc($stream_fetch_query_result)) {
+                //
+                //                            echo '<option value="' . $stream_fetch_query_result_row['stream_id'] . '">' . $stream_fetch_query_result_row['stream_name'] . '</option>';
+                //                        }
+                //                        ?>
+                <!--                    </select>-->
+                <!--                </div>-->
+                <!--                <br>-->
 
                 <button class="btn btn-theme btn-block" type="submit" name="submit"><i class="fa fa-lock"></i> Register
                 </button>
@@ -109,6 +150,24 @@ MAIN CONTENT
 <script type="text/javascript" src="assets/js/jquery.backstretch.min.js"></script>
 <script>
     $.backstretch("assets/img/login-bg.jpg", {speed: 500});
+</script>
+
+<script>
+    // $(document).ready(function () {
+    //     const studyingCourseSelector = $('#studying_course');
+    //     studyingCourseSelector.change(function () {
+    //         alert('from script section ' + studyingCourseSelector.val());
+    //         $.ajax({
+    //             type: 'GET',
+    //             url: 'get_streams.php',
+    //             data: 'course-id=' + studyingCourseSelector.val(),
+    //             success: function (msg) {
+    //                 alert(msg);
+    //                 $('#result').html(msg);
+    //             }
+    //         });
+    //     });
+    // });
 </script>
 
 </body>
