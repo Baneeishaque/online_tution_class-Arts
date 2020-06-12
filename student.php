@@ -1,12 +1,13 @@
 <?php
+session_start();
 include_once 'db_config.php';
 if (isset($_POST['submit'])) {
 
 //    echo 'from submission section';
 //    var_dump($_POST);
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = filter_input(INPUT_POST, 'username');
+    $password = filter_input(INPUT_POST, 'password');
 
     $student_login_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `studying_class`, `status`, `username`, `password` FROM `students` WHERE `username`='$username' AND `password`='$password'";
 //    echo $student_login_sql;

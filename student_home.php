@@ -2,33 +2,6 @@
 session_start();
 include_once 'db_config.php';
 
-if (isset($_GET['action'])) {
-
-    if ($_GET['action'] == 'delete-note') {
-
-        $student_id = $_GET['note-id'];
-
-        $student_update_sql = "UPDATE `notes` SET `status`=1 WHERE `note_id`='$student_id'";
-
-//        echo $student_update_sql;
-
-        $student_update_query_result = $db_connection->query($student_update_sql);
-
-        if ($student_update_query_result == 1) {
-
-            //Update Success
-            header("Location: teacher_home.php?message=success");
-            exit();
-
-        } else {
-
-            //Update Failure
-            header("Location: teacher_home.php?message=failure");
-            exit();
-        }
-    }
-}
-
 // If the user is not logged in redirect to the login page...
 if (!isset($_SESSION['stream_id'])) {
 
@@ -36,11 +9,10 @@ if (!isset($_SESSION['stream_id'])) {
     exit;
 }
 
-$student_fetch_sql = "SELECT DISTINCT `note_id`, `teacher_id`, `notes`.`stream_id`, `title`, `description`, `file`, `notes`.`status`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `notes`,`streams`,`courses`,`students` WHERE `notes`.`stream_id`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id` AND `notes`.`stream_id`='" . $_SESSION['stream_id'] . "' AND `notes`.`status`=0";
-
+$note_fetch_sql = "SELECT DISTINCT `note_id`, `teacher_id`, `notes`.`stream_id`, `title`, `description`, `file`, `notes`.`status`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `notes`,`streams`,`courses`,`students` WHERE `notes`.`stream_id`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id` AND `notes`.`stream_id`='" . $_SESSION['stream_id'] . "' AND `notes`.`status`=0";
 //echo $student_fetch_sql;
 
-$student_fetch_query_result = $db_connection->query($student_fetch_sql);
+$note_fetch_query_result = $db_connection->query($note_fetch_sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,22 +100,6 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
     <section id="main-content">
         <section class="wrapper">
 
-            <?php
-            if (isset($_GET['message'])) {
-
-                if ($_GET['message'] == 'success') {
-
-                    echo '<br>
-            <div class="alert alert-success"><b>Well done!</b> Note Deleted successfully...</div>';
-
-                } elseif ($_GET['message'] == 'failure') {
-
-                    echo '<br>
-            <div class="alert alert-danger"><b>Oh snap!</b> Try Again...</div>';
-                }
-            }
-            ?>
-
             <h3>Notes</h3>
 
             <div class="row mt">
@@ -163,15 +119,15 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                             <tbody>
                             <?php
                             $i = 1;
-                            while ($student_fetch_query_result_row = mysqli_fetch_assoc($student_fetch_query_result)) {
+                            while ($note_fetch_query_result_row = mysqli_fetch_assoc($note_fetch_query_result)) {
 
                                 echo '<tr>
                                 <td>' . $i . '</td>
-                                <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
-                                <td>' . $student_fetch_query_result_row['title'] . '</td>
-                                <td>' . $student_fetch_query_result_row['description'] . '</td>
+                                <td>' . $note_fetch_query_result_row['course_name'] . ' ' . $note_fetch_query_result_row['stream_name'] . '</td>
+                                <td>' . $note_fetch_query_result_row['title'] . '</td>
+                                <td>' . $note_fetch_query_result_row['description'] . '</td>
                                 <td>
-                                <a href="notes/' . $student_fetch_query_result_row['file'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
+                                <a href="notes/' . $note_fetch_query_result_row['file'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
                                 </td>
                             </tr>';
                             }
