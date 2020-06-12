@@ -3,7 +3,7 @@ session_start();
 include_once 'db_config.php';
 if (isset($_POST['submit'])) {
 
-//    echo 'from form submission...';
+    echo 'from form submission...';
 //    var_dump($_POST);
 
     $username = filter_input(INPUT_POST, 'username');
@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
 //    echo $teacher_login_sql;
 
     $teacher_login_query_result = $db_connection->query($teacher_login_sql);
-//    var_dump($teacher_login_query_result);
+    var_dump($teacher_login_query_result);
 
     if (mysqli_num_rows($teacher_login_query_result) == 0) {
 
