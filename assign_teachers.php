@@ -216,7 +216,7 @@ if (isset($_POST['submit'])) {
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label col-lg-2">Course</label>
+                                <label class="col-sm-2 control-label col-lg-2">Teacher</label>
                                 <div class="col-lg-10">
                                     <select class="form-control" name="teacher_id">
                                         <option value="NA">Select Please...</option>
