@@ -64,24 +64,10 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
 
 <section id="container">
 
-    <!--header start-->
-    <header class="header black-bg">
-        <div class="sidebar-toggle-box">
-            <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
-        </div>
-        <!--logo start-->
-        <a class="logo" href="#"><b>TIRUR ARTS COLLEGE</b></a>
-        <!--logo end-->
-
-        <div class="top-menu">
-            <ul class="nav pull-right top-menu">
-                <li><a class="logout" href="admin.php">Logout</a></li>
-            </ul>
-        </div>
-    </header>
-    <!--header end-->
-
     <?php
+    include_once 'header.php';
+    print_header("admin");
+
     include_once 'admin_sidebar.php';
     print_sidebar("Students", "Unverified Students");
     ?>
