@@ -5,6 +5,7 @@ if (isset($_POST['submit'])) {
 //    echo 'from submission section';
 //    var_dump($_POST);
 
+    //TODO : Rework
     $username = $_POST['username'];
     $password = $_POST['password'];
 

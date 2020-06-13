@@ -7,9 +7,9 @@ if (isset($_GET['action'])) {
 
         $student_id = $_GET['student-id'];
 
+        //TODO : CHeck for existing username
         $random_number = rand(0, 999);
         $student_update_sql = "UPDATE `students` SET `status`=1,`username`='student$random_number',`password`='password$random_number' WHERE `student_id`='$student_id'";
-
 //        echo $student_update_sql;
 
         $student_update_query_result = $db_connection->query($student_update_sql);
@@ -30,7 +30,6 @@ if (isset($_GET['action'])) {
 }
 
 $student_fetch_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `students`,`courses`,`streams` WHERE `status` = 0 AND `studying_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
-//    echo $student_login_sql;
 
 $student_fetch_query_result = $db_connection->query($student_fetch_sql);
 ?>
@@ -64,9 +63,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
 <body>
 
 <section id="container">
-    <!-- **********************************************************************************************************************************************************
-    TOP BAR CONTENT & NOTIFICATIONS
-    *********************************************************************************************************************************************************** -->
+
     <!--header start-->
     <header class="header black-bg">
         <div class="sidebar-toggle-box">
@@ -78,82 +75,17 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
 
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
-                <li><a class="logout" href="student.php">Logout</a></li>
+                <li><a class="logout" href="admin.php">Logout</a></li>
             </ul>
         </div>
     </header>
     <!--header end-->
 
-    <!-- **********************************************************************************************************************************************************
-    MAIN SIDEBAR MENU
-    *********************************************************************************************************************************************************** -->
-    <!--sidebar start-->
-    <aside>
-        <div id="sidebar" class="nav-collapse ">
-            <!-- sidebar menu start-->
-            <ul class="sidebar-menu" id="nav-accordion">
+    <?php
+    include_once 'admin_sidebar.php';
+    print_sidebar("Students", "Unverified Students");
+    ?>
 
-                <p class="centered"><a href="#"><img src="assets/img/logo.jpg" class="img-circle" width="60"></a></p>
-
-                <h5 class="centered">Administrator</h5>
-
-                <li class="sub-menu">
-                    <a class="active" href="javascript:">
-                        <i class="fa fa-th"></i>
-                        <span>Students</span>
-                    </a>
-                    <ul class="sub">
-                        <li><a href="admin_students.php">Current Students</a></li>
-                        <li class="active"><a href="admin_home.php">Unverified Students</a></li>
-                        <li><a href="suspended_students.php">Suspended Students</a></li>
-                        <li><a href="add_student.php">Add Students</a></li>
-                    </ul>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:">
-                        <i class=" fa fa-bar-chart-o"></i>
-                        <span>Teachers</span>
-                    </a>
-                    <ul class="sub">
-                        <li><a href="admin_teachers.php">Current Teachers</a></li>
-                        <li><a href="assign_teachers.php">Assign Teachers</a></li>
-                        <!-- <li><a href="admin_unverified_teachers.php">Unverified Teachers</a></li> -->
-                        <li><a href="add_teacher.php">Add Teachers</a></li>
-                    </ul>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:">
-                        <i class=" fa fa-bar-chart-o"></i>
-                        <span>Courses</span>
-                    </a>
-                    <ul class="sub">
-                        <li><a href="admin_courses.php">All Courses</a></li>
-                        <li><a href="#">Add Courses</a></li>
-                        <li><a href="#">All Streams</a></li>
-                        <li><a href="admin_streams.php">Add Streams</a></li>
-                    </ul>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:">
-                        <i class=" fa fa-bar-chart-o"></i>
-                        <span>Parents</span>
-                    </a>
-                    <ul class="sub">
-                        <li><a href="#">All Parents</a></li>
-                        <li><a href="#">Assign Parents</a></li>
-                        <li><a href="#">Add Parents</a></li>
-                    </ul>
-                </li>
-
-            </ul>
-            <!-- sidebar menu end-->
-        </div>
-    </aside>
-    <!--sidebar end-->
-
-    <!-- **********************************************************************************************************************************************************
-    MAIN CONTENT
-    *********************************************************************************************************************************************************** -->
     <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
@@ -185,7 +117,6 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                             <tr>
                                 <th><i class="fa fa-bullhorn"></i> Full Name</th>
                                 <th class="hidden-phone"><i class="fa fa-question-circle"></i> Studying Course</th>
-                                <!--                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Studying Stream</th>-->
                                 <th><i class="fa fa-bookmark"></i> Mobile Number</th>
                                 <th><i class=" fa fa-edit"></i> Actions</th>
                             </tr>
@@ -239,7 +170,6 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
 <script src="assets/js/common-scripts.js"></script>
 
 <!--script for this page-->
-
 <script>
     //custom select box
 
