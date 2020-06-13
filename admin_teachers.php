@@ -1,175 +1,34 @@
 <?php
 include_once 'db_config.php';
 
-//if (isset($_GET['action'])) {
-//
-//    if ($_GET['action'] == 'suspend-student') {
-//
-//        $student_id = $_GET['student-id'];
-//
-//        $student_update_sql = "UPDATE `students` SET `status`=2 WHERE `student_id`='$student_id'";
-//
-//        $student_update_query_result = $db_connection->query($student_update_sql);
-//
-//        if ($student_update_query_result == 1) {
-//
-//            //Update Success
-//            header("Location: admin_students.php?message=success");
-//            exit();
-//
-//        } else {
-//
-//            //Update Failure
-//            header("Location: admin_students.php?message=failure");
-//            exit();
-//        }
-//    }
-//}
-
-$teacher_fetch_sql = "SELECT `teacher_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `teachers`,`courses`,`streams` WHERE `status` = 1 AND `teaching_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
+$teacher_fetch_sql = "SELECT `teacher_id`, `full_name`, `mobile_number` FROM `teachers` WHERE `status` = 1";
 //echo $teacher_fetch_sql;
 
 $teacher_fetch_query_result = $db_connection->query($teacher_fetch_sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Dashboard">
-    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>TIRUR ARTS COLLEGE - Current Teachers</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <!--external css-->
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
-
-    <!-- Custom styles for this template -->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/style-responsive.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
+<?php
+include_once 'head.php';
+print_head("Admin", "Current Teachers");
+?>
 
 <body>
 
 <section id="container">
-    <!-- **********************************************************************************************************************************************************
-    TOP BAR CONTENT & NOTIFICATIONS
-    *********************************************************************************************************************************************************** -->
-    <!--header start-->
-    <header class="header black-bg">
-        <div class="sidebar-toggle-box">
-            <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
-        </div>
-        <!--logo start-->
-        <a class="logo" href="#"><b>TIRUR ARTS COLLEGE</b></a>
-        <!--logo end-->
 
-        <div class="top-menu">
-            <ul class="nav pull-right top-menu">
-                <li><a class="logout" href="student.php">Logout</a></li>
-            </ul>
-        </div>
-    </header>
-    <!--header end-->
+    <?php
+    include_once 'header.php';
+    print_header("admin");
 
-    <!-- **********************************************************************************************************************************************************
-    MAIN SIDEBAR MENU
-    *********************************************************************************************************************************************************** -->
-    <!--sidebar start-->
-    <aside>
-        <div id="sidebar" class="nav-collapse ">
-            <!-- sidebar menu start-->
-            <ul class="sidebar-menu" id="nav-accordion">
+    include_once 'admin_sidebar.php';
+    print_sidebar("Teachers", "Current Teachers");
+    ?>
 
-                <p class="centered"><a href="#"><img src="assets/img/logo.jpg" class="img-circle" width="60"></a></p>
-
-                <h5 class="centered">Administrator</h5>
-
-                <li class="sub-menu">
-                    <a href="javascript:">
-                        <i class="fa fa-th"></i>
-                        <span>Students</span>
-                    </a>
-                    <ul class="sub">
-                        <li><a href="admin_students.php">Current Students</a></li>
-                        <li><a href="admin_home.php">Unverified Students</a></li>
-                        <li><a href="suspended_students.php">Suspended Students</a></li>
-                        <li><a href="add_student.php">Add Students</a></li>
-                    </ul>
-                </li>
-                <li class="sub-menu">
-                    <a class="active" href="javascript:">
-                        <i class=" fa fa-bar-chart-o"></i>
-                        <span>Teachers</span>
-                    </a>
-                    <ul class="sub">
-                        <li class="active"><a href="admin_teachers.php">Current Teachers</a></li>
-                        <li><a href="assign_teachers.php">Assign Teachers</a></li>
-                        <!-- <li><a href="admin_unverified_teachers.php">Unverified Teachers</a></li> -->
-                        <li><a href="add_teacher.php">Add Teachers</a></li>
-                    </ul>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:">
-                        <i class=" fa fa-bar-chart-o"></i>
-                        <span>Courses</span>
-                    </a>
-                    <ul class="sub">
-                        <li><a href="#">All Courses</a></li>
-                        <li><a href="#">Add Courses</a></li>
-                        <li><a href="#">All Streams</a></li>
-                        >
-                        <li><a href="#">Add Streams</a></li>
-                    </ul>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:">
-                        <i class=" fa fa-bar-chart-o"></i>
-                        <span>Parents</span>
-                    </a>
-                    <ul class="sub">
-                        <li><a href="#">All Parents</a></li>
-                        <li><a href="#">Assign Parents</a></li>
-                        <li><a href="#">Add Parents</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <!-- sidebar menu end-->
-        </div>
-    </aside>
-    <!--sidebar end-->
-
-    <!-- **********************************************************************************************************************************************************
-    MAIN CONTENT
-    *********************************************************************************************************************************************************** -->
     <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
-
-            <?php
-            //            if (isset($_GET['message'])) {
-            //
-            //                if ($_GET['message'] == 'success') {
-            //
-            //                    echo '<br>
-            //            <div class="alert alert-success"><b>Well done!</b> Student Suspended successfully...</div>';
-            //
-            //                } elseif ($_GET['message'] == 'failure') {
-            //
-            //                    echo '<br>
-            //            <div class="alert alert-danger"><b>Oh snap!</b> Try Again...</div>';
-            //                }
-            //            }
-            ?>
 
             <h3>Current Teachers</h3>
 
@@ -180,31 +39,46 @@ $teacher_fetch_query_result = $db_connection->query($teacher_fetch_sql);
 
                             <thead>
                             <tr>
+                                <th><i class="fa fa-bullhorn"></i> Sl. No.</th>
                                 <th><i class="fa fa-bullhorn"></i> Full Name</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Course</th>
-                                <!--                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Studying Stream</th>-->
+                                <th class="hidden-phone"><i class="fa fa-question-circle"></i>Assigned Courses</th>
                                 <th><i class="fa fa-bookmark"></i> Mobile Number</th>
-                                <!--                                <th><i class=" fa fa-edit"></i> Actions</th>-->
+                                <th><i class=" fa fa-edit"></i> Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
+                            $i = 1;
                             while ($teacher_fetch_query_result_row = mysqli_fetch_assoc($teacher_fetch_query_result)) {
 
-//                                echo '<tr>
-//                                <td><a href="#">' . $student_fetch_query_result_row['full_name'] . '</a></td>
-//                                <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
-//                                <td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
-//                                <td>
-//                                      <a href="admin_students.php?action=suspend-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></a>
-//                                  </td>
-//                            </tr>';
+                                $assigned_courses_sql = "SELECT `subjects`.`subject_name`,`streams`.`stream_name`,`courses`.`course_name` FROM `assigns`,`subjects`,`streams`,`courses` WHERE `assigns`.`subject_id`=`subjects`.`subject_id` AND `subjects`.`stream_id`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id` AND `teacher_id`='" . $teacher_fetch_query_result_row['teacher_id'] . "'";
 
-                                echo '<tr>
+                                $assigned_courses_sql_result = $db_connection->query($assigned_courses_sql);
+
+                                if (mysqli_num_rows($assigned_courses_sql_result) > 0) {
+
+                                    $j = 1;
+                                    $assigned_courses = "";
+                                    while ($assigned_courses_sql_result_row = mysqli_fetch_assoc($assigned_courses_sql_result)) {
+
+                                        if ($j != 1) {
+
+                                            $assigned_courses = $assigned_courses . ", ";
+                                        }
+
+                                        $assigned_courses = $assigned_courses_sql_result_row['subject_name'] . ' - ' . $assigned_courses_sql_result_row['course_name'] . ' ' . $assigned_courses_sql_result_row['stream_name'];
+
+                                        $j++;
+                                    }
+
+                                    echo '<tr>
+                                <td>' . $i . '</td>
                                 <td><a href="#">' . $teacher_fetch_query_result_row['full_name'] . '</a></td>
-                                <td>' . $teacher_fetch_query_result_row['course_name'] . ' ' . $teacher_fetch_query_result_row['stream_name'] . '</td>
-                                <td>' . $teacher_fetch_query_result_row['mobile_number'] . '</td>
-                            </tr>';
+                                <td>' . $assigned_courses . ' </td >
+                                <td > ' . $teacher_fetch_query_result_row['mobile_number'] . ' </td >
+                            </tr > ';
+                                    $i++;
+                                }
                             }
                             ?>
 
@@ -217,40 +91,16 @@ $teacher_fetch_query_result = $db_connection->query($teacher_fetch_sql);
         </section>
         <!-- /wrapper -->
     </section><!-- /MAIN CONTENT -->
-
     <!--main content end-->
-    <!--footer start-->
-    <footer class="site-footer">
-        <div class="text-center">
-            2020 - Tirur Arts College
-            <a href="admin_home.php" class="go-top">
-                <i class="fa fa-angle-up"></i>
-            </a>
-        </div>
-    </footer>
-    <!--footer end-->
+
+    <?php
+    include_once 'footer.php';
+    ?>
 </section>
 
-<!-- js placed at the end of the document so the pages load faster -->
-<script src="assets/js/jquery.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-<script src="assets/js/jquery.scrollTo.min.js"></script>
-<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-
-<!--common script for all pages-->
-<script src="assets/js/common-scripts.js"></script>
-
-<!--script for this page-->
-
-<script>
-    //custom select box
-
-    $(function () {
-        $('select.styled').customSelect();
-    });
-
-</script>
+<?php
+include_once 'scripts.php';
+?>
 
 </body>
 </html>
