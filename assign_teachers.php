@@ -176,27 +176,8 @@ if (isset($_POST['submit'])) {
                 <div class="col-lg-12">
                     <div class="form-panel">
                         <form class="form-horizontal tasi-form" method="post" action="assign_teachers.php">
-                            <!--                            <div class="form-group has-success">-->
-                            <!--                                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Full Name</label>-->
-                            <!--                                <div class="col-lg-10">-->
-                            <!--                                    <input type="text" class="form-control" id="inputSuccess" name="full_name" required>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <!--                            <div class="form-group has-error">-->
-                            <!--                                <label class="col-sm-2 control-label col-lg-2" for="inputError">Mobile Number</label>-->
-                            <!--                                <div class="col-lg-10">-->
-                            <!--                                    <input type="text" class="form-control" id="inputError" name="mobile_number"-->
-                            <!--                                           required>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <!--                            <div class="form-group has-warning">-->
-                            <!--                                <label class="col-sm-2 control-label col-lg-2" for="inputWarning">Email Address</label>-->
-                            <!--                                <div class="col-lg-10">-->
-                            <!--                                    <input type="email" class="form-control" id="inputWarning" name="email_address"-->
-                            <!--                                           required>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <div class="form-group">
+
+                        <div class="form-group">
                                 <label class="col-sm-2 control-label col-lg-2">Course</label>
                                 <div class="col-lg-10">
                                     <select class="form-control" name="teaching_class" id="studying_course">

@@ -153,6 +153,22 @@ function print_sidebar($main_section, $sub_section)
     }
 
     echo '><a href="#">Add Streams</a></li>
+    <li ';
+
+    if ($sub_section == "All Subjects") {
+
+        echo 'class="active"';
+    }
+
+    echo '><a href="admin_subjects.php">All Subjects</a></li>
+    <li ';
+
+    if ($sub_section == "Add Subjects") {
+
+        echo 'class="active"';
+    }
+
+    echo '><a href="add_subject.php">Add Subjects</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
