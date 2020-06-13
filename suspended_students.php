@@ -112,7 +112,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
                         <span>Teachers</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="admin_teachers.php">Current Teachers</a></li>
+                        <li><a href="admin_assigned_teachers.php">Current Teachers</a></li>
                         <li><a href="assign_teachers.php">Assign Teachers</a></li>
                         <!-- <li><a href="admin_unverified_teachers.php">Unverified Teachers</a></li> -->
                         <li><a href="add_teacher.php">Add Teachers</a></li>

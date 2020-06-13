@@ -11,7 +11,7 @@ $teacher_fetch_query_result = $db_connection->query($teacher_fetch_sql);
 
 <?php
 include_once 'head.php';
-print_head("Admin", "All Teachers");
+print_head("Admin", "Current Teachers");
 ?>
 
 <body>
@@ -23,14 +23,14 @@ print_head("Admin", "All Teachers");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Teachers", "All Teachers");
+    print_sidebar("Teachers", "Current Teachers");
     ?>
 
     <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
 
-            <h3>All Teachers</h3>
+            <h3>Current Teachers</h3>
 
             <div class="row mt">
                 <div class="col-md-12">
@@ -54,11 +54,11 @@ print_head("Admin", "All Teachers");
                                 $assigned_courses_sql = "SELECT `subjects`.`subject_name`,`streams`.`stream_name`,`courses`.`course_name` FROM `assigns`,`subjects`,`streams`,`courses` WHERE `assigns`.`subject_id`=`subjects`.`subject_id` AND `subjects`.`stream_id`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id` AND `teacher_id`='" . $teacher_fetch_query_result_row['teacher_id'] . "'";
 
                                 $assigned_courses_sql_result = $db_connection->query($assigned_courses_sql);
-                                $assigned_courses = "";
 
                                 if (mysqli_num_rows($assigned_courses_sql_result) > 0) {
 
                                     $j = 1;
+                                    $assigned_courses = "";
                                     while ($assigned_courses_sql_result_row = mysqli_fetch_assoc($assigned_courses_sql_result)) {
 
                                         if ($j != 1) {
@@ -70,14 +70,15 @@ print_head("Admin", "All Teachers");
 
                                         $j++;
                                     }
-                                }
-                                echo '<tr>
+
+                                    echo '<tr>
                                 <td>' . $i . '</td>
                                 <td><a href="#">' . $teacher_fetch_query_result_row['full_name'] . '</a></td>
                                 <td>' . $assigned_courses . ' </td >
                                 <td > ' . $teacher_fetch_query_result_row['mobile_number'] . ' </td >
                             </tr > ';
-                                $i++;
+                                    $i++;
+                                }
                             }
                             ?>
 

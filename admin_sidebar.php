@@ -81,7 +81,7 @@ function print_sidebar($main_section, $sub_section)
         echo 'class="active"';
     }
 
-    echo '><a href="admin_teachers.php">Current Teachers</a></li>
+    echo '><a href="admin_assigned_teachers.php">Current Teachers</a></li>
                         <li ';
 
     if ($sub_section == "Assign Teachers") {
@@ -90,14 +90,14 @@ function print_sidebar($main_section, $sub_section)
     }
 
     echo '><a href="assign_teachers.php">Assign Teachers</a></li>
-                        <!-- <li ';
+                        <li ';
 
-    if ($sub_section == "Unverified Teachers") {
+    if ($sub_section == "Unassigned Teachers") {
 
         echo 'class="active"';
     }
 
-    echo '><a href="admin_unverified_teachers.php">Unverified Teachers</a></li> -->
+    echo '><a href="admin_unassigned_teachers.php">Unassigned Teachers</a></li>
                         <li ';
 
     if ($sub_section == "Add Teachers") {
@@ -106,6 +106,14 @@ function print_sidebar($main_section, $sub_section)
     }
 
     echo '><a href="add_teacher.php">Add Teachers</a></li>
+    <li ';
+
+    if ($sub_section == "All Teachers") {
+
+        echo 'class="active"';
+    }
+
+    echo '><a href="admin_teachers.php">All Teachers</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
