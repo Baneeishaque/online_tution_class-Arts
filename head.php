@@ -2,6 +2,14 @@
 
 function print_head($role, $operation)
 {
+    if ($role == "") {
+
+        $out = $operation;
+
+    } else {
+
+        $out = $role . ' : ' . $operation;
+    }
     echo '<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +17,7 @@ function print_head($role, $operation)
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>TIRUR ARTS COLLEGE - ' . $role . ' : ' . $operation . '</title>
+    <title>TIRUR ARTS COLLEGE - ' . $out . '</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
