@@ -25,6 +25,7 @@ if (isset($_POST['submit'])) {
 
     } else {
 
+//        echo $db_connection->error;
         //Insertion Failure
         header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=failure");
         exit();

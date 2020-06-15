@@ -22,6 +22,28 @@ if (isset($_GET['action'])) {
 
         } else {
 
+//            echo $db_connection->error;
+            //Update Failure
+            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=failure");
+            exit();
+        }
+    } elseif (filter_input(INPUT_GET, 'action') == 'delete-student') {
+
+        $student_id = filter_input(INPUT_GET, 'student-id');
+
+        $student_update_sql = "UPDATE `students` SET `status`=3 WHERE `student_id`='$student_id'";
+//        echo $student_update_sql;
+
+        $student_update_query_result = $db_connection->query($student_update_sql);
+
+        if ($student_update_query_result == 1) {
+
+            //Update Success
+            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=success2");
+            exit();
+
+        } else {
+
             //Update Failure
             header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=failure");
             exit();
@@ -65,6 +87,11 @@ print_head("Admin", "Unverified Students");
                     echo '<br>
             <div class="alert alert-success"><b>Well done!</b> Student Verified successfully, Credentials : student' . filter_input(INPUT_GET, 'random') . ' & password' . filter_input(INPUT_GET, 'random') . '</div>';
 
+                } else if (filter_input(INPUT_GET, 'message') == 'success2') {
+
+                    echo '<br>
+            <div class="alert alert-success"><b>Well done!</b> Student Deleted successfully...</div>';
+
                 } elseif (filter_input(INPUT_GET, 'message') == 'failure') {
 
                     echo '<br>
@@ -85,6 +112,7 @@ print_head("Admin", "Unverified Students");
                                 <th><i class="fa fa-bullhorn"></i> Full Name</th>
                                 <th class="hidden-phone"><i class="fa fa-question-circle"></i> Studying Course</th>
                                 <th><i class="fa fa-bookmark"></i> Mobile Number</th>
+                                <th><i class="fa fa-bookmark"></i> Email ID</th>
                                 <th><i class=" fa fa-edit"></i> Actions</th>
                             </tr>
                             </thead>
@@ -96,8 +124,10 @@ print_head("Admin", "Unverified Students");
                                 <td><a href="#">' . $student_fetch_query_result_row['full_name'] . '</a></td>
                                 <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
                                 <td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
+                                <td>' . $student_fetch_query_result_row['email_address'] . '</td>
                                 <td>
                                     <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=verify-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
+                                    <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-times-circle "></i></button></a>
                                 </td>
                             </tr>';
                             }
