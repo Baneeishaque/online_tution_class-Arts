@@ -69,7 +69,7 @@ print_head("Admin", "Suspended Students");
             }
             ?>
 
-            <h3>Current Students</h3>
+            <h3>Suspended Students</h3>
 
             <div class="row mt">
                 <div class="col-md-12">
@@ -93,7 +93,7 @@ print_head("Admin", "Suspended Students");
                                 <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
                                 <td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
                                 <td>
-                                      <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=enable-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></a>
+                                      <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=enable-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
                                   </td>
                             </tr>';
                             }
