@@ -20,7 +20,7 @@ print_head("Admin", "All Streams");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Courses", "All Streams");
+    print_sidebar("Courses", "All Streams", $db_connection);
     ?>
 
     <!--main content start-->

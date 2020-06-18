@@ -24,7 +24,7 @@ print_head("Admin", "All Courses");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Courses", "All Courses");
+    print_sidebar("Courses", "All Courses", $db_connection);
     ?>
 
     <!--main content start-->

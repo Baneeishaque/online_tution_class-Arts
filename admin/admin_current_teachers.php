@@ -23,7 +23,7 @@ print_head("Admin", "Current Teachers");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Teachers", "Current Teachers");
+    print_sidebar("Teachers", "Current Teachers", $db_connection);
     ?>
 
     <!--main content start-->

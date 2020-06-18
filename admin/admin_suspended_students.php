@@ -46,7 +46,7 @@ print_head("Admin", "Suspended Students");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Students", "Suspended Students");
+    print_sidebar("Students", "Suspended Students", $db_connection);
     ?>
 
     <!--main content start-->

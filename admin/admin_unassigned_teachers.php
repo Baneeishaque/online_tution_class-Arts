@@ -23,7 +23,7 @@ print_head("Admin", "Unassigned Teachers");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Teachers", "Unassigned Teachers");
+    print_sidebar("Teachers", "Unassigned Teachers", $db_connection);
     ?>
 
     <!--main content start-->

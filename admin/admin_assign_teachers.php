@@ -44,7 +44,7 @@ print_head("Admin", "Assign Teachers");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Teachers", "Assign Teachers");
+    print_sidebar("Teachers", "Assign Teachers", $db_connection);
     ?>
 
     <!--main content start-->

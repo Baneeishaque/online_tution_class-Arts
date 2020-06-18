@@ -51,7 +51,7 @@ print_head("Admin", "Add Subjects");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Courses", "Add Subjects");
+    print_sidebar("Courses", "Add Subjects", $db_connection);
     ?>
 
     <!--main content start-->

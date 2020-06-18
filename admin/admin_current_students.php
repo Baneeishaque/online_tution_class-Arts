@@ -48,7 +48,7 @@ print_head("Admin", "Current Students");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Students", "Current Students");
+    print_sidebar("Students", "Current Students", $db_connection);
     ?>
 
     <!--main content start-->

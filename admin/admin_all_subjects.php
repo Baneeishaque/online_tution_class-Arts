@@ -63,7 +63,7 @@ print_head("Admin", "All Subjects");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Courses", "All Subjects");
+    print_sidebar("Courses", "All Subjects", $db_connection);
     ?>
 
     <!--main content start-->

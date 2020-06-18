@@ -2,7 +2,7 @@
 
 //error_reporting(E_ALL);
 
-function print_sidebar($main_section, $sub_section)
+function print_sidebar($main_section, $sub_section, $db_connection)
 {
     echo '    <!--sidebar start-->
     <aside>
@@ -35,14 +35,6 @@ function print_sidebar($main_section, $sub_section)
     }
 
     echo '><a href="admin_current_students.php">Current Students</a></li>
-                        <li ';
-
-    if ($sub_section == "Unverified Students") {
-
-        echo 'class="active"';
-    }
-
-    echo '><a href="admin_unverified_students.php">Unverified Students</a></li>
                         <li ';
 
     if ($sub_section == "Suspended Students") {
@@ -219,6 +211,35 @@ function print_sidebar($main_section, $sub_section)
                     </ul>
                 </li>
 
+                <li class="sub-menu">
+                    <a ';
+
+    if ($main_section == "New Registrations") {
+
+        echo 'class="active"';
+    }
+
+    echo ' href="javascript:">
+                        <i class=" fa fa-bar-chart-o"></i>
+                        <span>New Registrations</span>
+                    </a>
+                    <ul class="sub">';
+
+    $assigned_courses_sql = "SELECT `streams`.`stream_id`,`streams`.`stream_name`,`courses`.`course_name` FROM `streams`,`courses` WHERE `streams`.`course_id`=`courses`.`course_id` ORDER BY `courses`.`course_name`,`streams`.`stream_name`";
+
+    $assigned_courses_sql_result = $db_connection->query($assigned_courses_sql);
+    while ($assigned_courses_sql_result_row = mysqli_fetch_assoc($assigned_courses_sql_result)) {
+
+        echo '<li ';
+        if ($sub_section == $assigned_courses_sql_result_row['stream_id']) {
+            echo 'class="active"';
+        }
+        echo '><a href="admin_unverified_students.php?stream-id=' . $assigned_courses_sql_result_row['stream_id'] . '">' . $assigned_courses_sql_result_row['course_name'] . ' ' . $assigned_courses_sql_result_row['stream_name'] . '</a></li>';
+    }
+
+    echo '          </ul>
+                </li>
+                
             </ul>
             <!-- sidebar menu end-->
         </div>
