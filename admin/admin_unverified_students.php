@@ -132,8 +132,8 @@ print_head("Admin", "New Registrations");
                                 <td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
                                 <td>' . $student_fetch_query_result_row['email_address'] . '</td>
                                 <td>
-                                    <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=verify-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
-                                    <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-times-circle "></i></button></a>
+                                    <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=verify-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
+                                    <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button></a>
                                 </td>
                             </tr>';
                             }

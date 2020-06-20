@@ -3,11 +3,11 @@ include_once '../db_config.php';
 
 if (isset($_GET['action'])) {
 
-    if (filter_input(INPUT_GET, 'action') == 'delete-teacher') {
+    if (filter_input(INPUT_GET, 'action') == 'enable-teacher') {
 
         $student_id = filter_input(INPUT_GET, 'teacher-id');
 
-        $student_update_sql = "UPDATE `teachers` SET `status`=3 WHERE `teacher_id`='$student_id'";
+        $student_update_sql = "UPDATE `teachers` SET `status`=1 WHERE `teacher_id`='$student_id'";
 
         $student_update_query_result = $db_connection->query($student_update_sql);
 
@@ -26,7 +26,7 @@ if (isset($_GET['action'])) {
     }
 }
 
-$teacher_fetch_sql = "SELECT `teacher_id`, `full_name`, `mobile_number` FROM `teachers` WHERE `status` = 1";
+$teacher_fetch_sql = "SELECT `teacher_id`, `full_name`, `mobile_number` FROM `teachers` WHERE `status` = 2";
 //echo $teacher_fetch_sql;
 
 $teacher_fetch_query_result = $db_connection->query($teacher_fetch_sql);
@@ -36,7 +36,7 @@ $teacher_fetch_query_result = $db_connection->query($teacher_fetch_sql);
 
 <?php
 include_once 'head_for_admin.php';
-print_head("Admin", "All Teachers");
+print_head("Admin", "Suspended Teachers");
 ?>
 
 <body>
@@ -48,7 +48,7 @@ print_head("Admin", "All Teachers");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Teachers", "All Teachers", $db_connection);
+    print_sidebar("Teachers", "Suspended Teachers", $db_connection);
     ?>
 
     <!--main content start-->
@@ -61,7 +61,7 @@ print_head("Admin", "All Teachers");
                 if (filter_input(INPUT_GET, 'message') == 'success') {
 
                     echo '<br>
-            <div class="alert alert-success"><b>Well done!</b> Teacher Deleted successfully...</div>';
+            <div class="alert alert-success"><b>Well done!</b> Teacher Enabled successfully...</div>';
 
                 } elseif (filter_input(INPUT_GET, 'message') == 'failure') {
 
@@ -71,7 +71,7 @@ print_head("Admin", "All Teachers");
             }
             ?>
 
-            <h3>All Teachers</h3>
+            <h3>Suspended Teachers</h3>
 
             <div class="row mt">
                 <div class="col-md-12">
@@ -84,7 +84,7 @@ print_head("Admin", "All Teachers");
                                 <th><i class="fa fa-bullhorn"></i> Full Name</th>
                                 <th class="hidden-phone"><i class="fa fa-question-circle"></i>Assigned Courses</th>
                                 <th><i class="fa fa-bookmark"></i> Mobile Number</th>
-                                <!--                                <th><i class=" fa fa-edit"></i> Actions</th>-->
+                                <th><i class=" fa fa-edit"></i> Actions</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -117,9 +117,7 @@ print_head("Admin", "All Teachers");
                                 <td><a href="#">' . $teacher_fetch_query_result_row['full_name'] . '</a></td>
                                 <td>' . $assigned_courses . ' </td >
                                 <td > ' . $teacher_fetch_query_result_row['mobile_number'] . ' </td >
-                                ';
-//                                <td><a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-teacher&teacher-id=' . $teacher_fetch_query_result_row['teacher_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></a></td>
-                                echo '
+                                <td><a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=enable-teacher&teacher-id=' . $teacher_fetch_query_result_row['teacher_id'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a></td>
                             </tr > ';
                                 $i++;
                             }

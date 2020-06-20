@@ -2,15 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="8bd7a58f-d54c-4c73-aa37-3f38736b3b0e" name="SSquared.qa log-files online-tution-class" url="http://ssquared.qa/log-files/online_tution_class">
+      <webServer id="8bd7a58f-d54c-4c73-aa37-3f38736b3b0e" name="SSquared.qa log-files online-tution-class" url="http://online-tution.ssquared.qa">
         <fileTransfer rootFolder="/public_html/log-files/online_tution_class" host="149.255.58.44" port="21">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
-          </advancedOptions>
-        </fileTransfer>
-      </webServer>
-      <webServer id="bc799ae4-688a-46b7-801f-95ebf3fb9edf" name="SSquared.qa log-filesonline-tution-class2" url="http://ssquared.qa/log-files/online_tution_class2">
-        <fileTransfer rootFolder="/public_html/log-files/online_tution_class2" host="149.255.58.44" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

@@ -92,6 +92,14 @@ function print_sidebar($main_section, $sub_section, $db_connection)
     echo '><a href="admin_unassigned_teachers.php">Unassigned Teachers</a></li>
                         <li ';
 
+    if ($sub_section == "Suspended Teachers") {
+
+        echo 'class="active"';
+    }
+
+    echo '><a href="admin_suspended_teachers.php">Suspended Teachers</a></li>
+                        <li ';
+
     if ($sub_section == "Add Teachers") {
 
         echo 'class="active"';

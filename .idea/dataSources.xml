@@ -7,5 +7,11 @@
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://149.255.58.44:3306/ssquareq_tution_class</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="tirurart_db@localhost" uuid="ff6f2bec-8b26-4894-9b27-76e6fb6b0538">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/tirurart_db</jdbc-url>
+    </data-source>
   </component>
 </project>

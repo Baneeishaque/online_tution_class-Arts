@@ -95,7 +95,7 @@ print_head("Admin", "Current Students");
                                 <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
                                 <td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
                                 <td>
-                                      <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=suspend-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></a>
+                                      <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=suspend-student&student-id=' . $student_fetch_query_result_row['student_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-ban" aria-hidden="true"></i></button></a>
                                   </td>
                             </tr>';
                             }
