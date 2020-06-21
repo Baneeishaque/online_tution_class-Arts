@@ -23,6 +23,7 @@
             <excludedPath local="true" path="$PROJECT_DIR$/.whitesource" />
             <excludedPath path="/.well-known" />
             <excludedPath path="/cgi-bin" />
+            <excludedPath local="true" path="$PROJECT_DIR$/api_test" />
           </excludedPaths>
         </serverdata>
       </paths>

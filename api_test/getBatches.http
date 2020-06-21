@@ -1,0 +1,10 @@
+GET https://tirurartscollege.com/online/getBatches.php?stream-id=2
+Accept: application/json
+
+###
+GET https://tirurartscollege.com/online/getBatches.php?stream-id=4
+Accept: application/json
+
+###
+GET https://tirurartscollege.com/online/getBatches.php?stream-id=5
+Accept: application/json

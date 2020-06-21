@@ -161,7 +161,7 @@ function print_sidebar($main_section, $sub_section, $db_connection)
     }
 
     echo '><a href="admin_add_stream.php">Add Streams</a></li>
-    <li ';
+                        <li ';
 
     if ($sub_section == "All Subjects") {
 
@@ -169,7 +169,7 @@ function print_sidebar($main_section, $sub_section, $db_connection)
     }
 
     echo '><a href="admin_all_subjects.php">All Subjects</a></li>
-    <li ';
+                        <li ';
 
     if ($sub_section == "Add Subjects") {
 
@@ -177,6 +177,23 @@ function print_sidebar($main_section, $sub_section, $db_connection)
     }
 
     echo '><a href="admin_add_subject.php">Add Subjects</a></li>
+                        <li ';
+
+    if ($sub_section == "Add Batchs") {
+
+        echo 'class="active"';
+    }
+
+    echo '><a href="#">Add Batchs</a></li>
+                        <li ';
+
+    if ($sub_section == "All Batchs") {
+
+        echo 'class="active"';
+    }
+
+    echo '><a href="#">All Batchs</a></li>
+                        
                     </ul>
                 </li>
                 <li class="sub-menu">
