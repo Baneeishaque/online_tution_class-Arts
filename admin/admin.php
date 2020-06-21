@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
     } else {
 
         //Goto Admin Home
-        header("Location: admin_current_students.php");
+        header("Location: admin_current_teachers.php");
         exit();
     }
 }

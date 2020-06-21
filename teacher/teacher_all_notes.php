@@ -33,6 +33,11 @@ if (isset($_GET['action'])) {
             exit();
         }
     }
+    if (filter_input(INPUT_GET, 'action') == 'edit-note') {
+
+//        header("Location: teacher_edit_notes.php?subject-id=" . $_GET['subject-id'] . "&subject-name=" . $_GET['subject-name']);
+//        exit();
+    }
 }
 
 // If the user is not logged in redirect to the login page...
@@ -115,13 +120,16 @@ print_head("Teacher", "Notes");
                                 <td>' . $student_fetch_query_result_row['title'] . '</td>
                                 <td>' . $student_fetch_query_result_row['description'] . '</td>
                                 <td>
-                                <a href="notes/' . $student_fetch_query_result_row['file'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
-                                    <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-note&note-id=' . $student_fetch_query_result_row['note_id'] . '&subject-id=' . $_GET['subject-id'] . '&subject-name=' . $_GET['subject-name'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button></a>
+                                    <a href="notes/' . $student_fetch_query_result_row['file'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
+                                     <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=edit-note&note-id=' . $student_fetch_query_result_row['note_id'] . '&subject-id=' . $_GET['subject-id'] . '&subject-name=' . $_GET['subject-name'] . '"><button class="btn btn-warning btn-xs"><i class="fa fa fa-pencil"></i></button></a>
+                                     <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-note&note-id=' . $student_fetch_query_result_row['note_id'] . '&subject-id=' . $_GET['subject-id'] . '&subject-name=' . $_GET['subject-name'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button></a>
+
                                 </td>
                             </tr>';
                                 $i++;
                             }
                             ?>
+
 
                             </tbody>
                         </table>

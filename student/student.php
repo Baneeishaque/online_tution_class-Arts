@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
             header("Location:  " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=unverified_user");
             exit();
 
-        } else if ($student_login_query_result_row['status'] == 2) {
+        } else if ($student_login_query_result_row['status'] == 1) {
 
             //Unverified User
             header("Location:  " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=suspended_user");

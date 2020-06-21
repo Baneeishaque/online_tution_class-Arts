@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
     if ($student_insertion_query_result == 1) {
 
         //Insertion Success
-        header("Location: student.php?message=success");
+        header("Location: student/student.php?message=success");
         exit();
 
     } else {

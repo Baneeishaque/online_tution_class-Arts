@@ -26,24 +26,24 @@ function print_sidebar($main_section, $sub_section, $db_connection)
                         <i class="fa fa-th"></i>
                         <span>Students</span>
                     </a>
-                    <ul class="sub">
-                        <li ';
-
-    if ($sub_section == "Current Students") {
-
-        echo 'class="active"';
-    }
-
-    echo '><a href="admin_current_students.php">Current Students</a></li>
-                        <li ';
-
-    if ($sub_section == "Suspended Students") {
-
-        echo 'class="active"';
-    }
-
-    echo '><a href="admin_suspended_students.php">Suspended Students</a></li>
-                        <li ';
+                    <ul class="sub">';
+//    echo '             <li ';
+//
+//    if ($sub_section == "Current Students") {
+//
+//        echo 'class="active"';
+//    }
+//
+//    echo '><a href="#">Current Students</a></li>
+//                        <li ';
+//
+//    if ($sub_section == "Suspended Students") {
+//
+//        echo 'class="active"';
+//    }
+//
+//    echo '><a href="#">Suspended Students</a></li>';
+    echo '              <li ';
 
     if ($sub_section == "Add Students") {
 
@@ -144,7 +144,7 @@ function print_sidebar($main_section, $sub_section, $db_connection)
         echo 'class="active"';
     }
 
-    echo '><a href="#">Add Courses</a></li>
+    echo '><a href="admin_add_course.php">Add Courses</a></li>
                         <li ';
 
     if ($sub_section == "All Streams") {
@@ -160,7 +160,7 @@ function print_sidebar($main_section, $sub_section, $db_connection)
         echo 'class="active"';
     }
 
-    echo '><a href="#">Add Streams</a></li>
+    echo '><a href="admin_add_stream.php">Add Streams</a></li>
     <li ';
 
     if ($sub_section == "All Subjects") {
@@ -222,14 +222,14 @@ function print_sidebar($main_section, $sub_section, $db_connection)
                 <li class="sub-menu">
                     <a ';
 
-    if ($main_section == "New Registrations") {
+    if ($main_section == "Current Students") {
 
         echo 'class="active"';
     }
 
     echo ' href="javascript:">
                         <i class=" fa fa-bar-chart-o"></i>
-                        <span>New Registrations</span>
+                        <span>Current Students</span>
                     </a>
                     <ul class="sub">';
 
