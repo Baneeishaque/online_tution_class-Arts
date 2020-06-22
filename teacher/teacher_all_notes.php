@@ -106,6 +106,7 @@ print_head("Teacher", "Notes");
                                 <th class="hidden-phone"><i class="fa fa-question-circle"></i> Course</th>
                                 <th class="hidden-phone"><i class="fa fa-question-circle"></i> Title</th>
                                 <th><i class="fa fa-bookmark"></i> Description</th>
+                                <th><i class="fa fa-bookmark"></i> File</th>
                                 <th><i class=" fa fa-edit"></i> Actions</th>
                             </tr>
                             </thead>
@@ -119,6 +120,7 @@ print_head("Teacher", "Notes");
                                 <td>' . $student_fetch_query_result_row['subject_name'] . ' - ' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
                                 <td>' . $student_fetch_query_result_row['title'] . '</td>
                                 <td>' . $student_fetch_query_result_row['description'] . '</td>
+                                <td>' . $student_fetch_query_result_row['file'] . '</td>
                                 <td>
                                     <a href="notes/' . $student_fetch_query_result_row['file'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
                                      <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=edit-note&note-id=' . $student_fetch_query_result_row['note_id'] . '&subject-id=' . $_GET['subject-id'] . '&subject-name=' . $_GET['subject-name'] . '"><button class="btn btn-warning btn-xs"><i class="fa fa fa-pencil"></i></button></a>

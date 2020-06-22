@@ -56,6 +56,7 @@ print_head("Student", "Notes");
                                 <th><i class="fa fa-bullhorn"></i> Sl. No</th>
                                 <th class="hidden-phone"><i class="fa fa-question-circle"></i> Title</th>
                                 <th><i class="fa fa-bookmark"></i> Description</th>
+                                <th><i class="fa fa-bookmark"></i> File</th>
                                 <th><i class=" fa fa-edit"></i> Actions</th>
                             </tr>
                             </thead>
@@ -68,7 +69,7 @@ print_head("Student", "Notes");
                                 <td>' . $i . '</td>
                                 <td>' . $note_fetch_query_result_row['title'] . '</td>
                                 <td>' . $note_fetch_query_result_row['description'] . '</td>
-                                <td>
+                                <td>' . $note_fetch_query_result_row['file'] . '</td><td>
                                 <a href="../teacher/notes/' . $note_fetch_query_result_row['file'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
                                 </td>
                             </tr>';
