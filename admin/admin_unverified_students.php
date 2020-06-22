@@ -213,7 +213,6 @@ print_head("Admin", "Current Students");
                                 } else if ($student_fetch_query_result_row['status'] == '2') {
 
                                     echo '<a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=suspend-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-lock" aria-hidden="true"></i></button></a>';
-
                                 }
                                 echo '</td>
                             </tr>';
