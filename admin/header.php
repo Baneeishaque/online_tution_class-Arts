@@ -8,7 +8,7 @@ function print_header($role)
             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
         </div>
         <!--logo start-->
-        <a class="logo" href="#"><b>TIRUR ARTS COLLEGE</b></a>
+        <a class="logo" href="#"><b>KKM COLLEGE OF ARTS & SCIENCE</b></a>
         <!--logo end-->
 
         <div class="top-menu">

@@ -1,6 +1,6 @@
 <?php
 
-$isInClientServer = true;
+$isInClientServer = false;
 
 $cpanel_username = "ssquareq";
 if ($isInClientServer) {
@@ -9,7 +9,7 @@ if ($isInClientServer) {
 $cpanel_username_suffix = "_";
 
 $db_server = "localhost";
-$db_server_user = $cpanel_username . $cpanel_username_suffix . "dotlocus";
+$db_server_user = $cpanel_username . $cpanel_username_suffix . "root";
 if ($isInClientServer) {
     $db_server_user = $cpanel_username . $cpanel_username_suffix . "dba";
 }

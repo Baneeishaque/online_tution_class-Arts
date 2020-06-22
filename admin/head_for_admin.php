@@ -17,7 +17,7 @@ function print_head($role, $operation)
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>TIRUR ARTS COLLEGE - ' . $out . '</title>
+    <title>KKM COLLEGE OF ARTS & SCIENCE - ' . $out . '</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
