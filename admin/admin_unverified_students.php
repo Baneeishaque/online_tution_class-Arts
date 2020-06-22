@@ -7,15 +7,30 @@ if (!isset($_GET['stream-id'])) {
     exit;
 }
 
+function checkExistingUsername($dbConnection)
+{
+    $random_number = rand(0, 999);
+    $studentFetchSql = "SELECT `student_id` FROM `students` WHERE `username`='kkms$random_number'";
+    $studentFetchSqlResult = $dbConnection->query($studentFetchSql);
+    if (mysqli_num_rows($studentFetchSqlResult) != 0) {
+
+        checkExistingUsername($dbConnection);
+
+    } else {
+
+        return $random_number;
+    }
+}
+
 if (isset($_GET['action'])) {
 
     if (filter_input(INPUT_GET, 'action') == 'verify-student') {
 
         $student_id = filter_input(INPUT_GET, 'student-id');
 
-        //TODO : Check for existing username
-        $random_number = rand(0, 999);
-        $student_update_sql = "UPDATE `students` SET `status`=2,`username`='student$random_number',`password`='password$random_number' WHERE `student_id`='$student_id'";
+        $random_number = checkExistingUsername($db_connection);
+
+        $student_update_sql = "UPDATE `students` SET `status`=2,`username`='kkms$random_number',`password`='kkms$random_number' WHERE `student_id`='$student_id'";
 //        echo $student_update_sql;
 
         $student_update_query_result = $db_connection->query($student_update_sql);
@@ -23,21 +38,22 @@ if (isset($_GET['action'])) {
         if ($student_update_query_result == 1) {
 
             //Update Success
-            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=success&random=$random_number&stream-id=" . $_GET['stream-id']);
+            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=success&random=$random_number&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
             exit();
 
         } else {
 
 //            echo $db_connection->error;
             //Update Failure
-            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=failure&stream-id=" . $_GET['stream-id']);
+            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=failure&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
             exit();
         }
+
     } elseif (filter_input(INPUT_GET, 'action') == 'delete-student') {
 
         $student_id = filter_input(INPUT_GET, 'student-id');
 
-        $student_update_sql = "UPDATE `students` SET `status`=3 WHERE `student_id`='$student_id'";
+        $student_update_sql = "DELETE FROM `students` WHERE `student_id`='$student_id'";
 //        echo $student_update_sql;
 
         $student_update_query_result = $db_connection->query($student_update_sql);
@@ -45,13 +61,13 @@ if (isset($_GET['action'])) {
         if ($student_update_query_result == 1) {
 
             //Update Success
-            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=success2&stream-id=" . $_GET['stream-id']);
+            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=success2&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
             exit();
 
         } else {
 
             //Update Failure
-            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=failure&stream-id=" . $_GET['stream-id']);
+            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=failure&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
             exit();
         }
     } else if (filter_input(INPUT_GET, 'action') == 'suspend-student') {
@@ -65,13 +81,13 @@ if (isset($_GET['action'])) {
         if ($student_update_query_result == 1) {
 
             //Update Success
-            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=success3&stream-id=" . $_GET['stream-id']);
+            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=success3&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
             exit();
 
         } else {
 
             //Update Failure
-            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=failure&stream-id=" . $_GET['stream-id']);
+            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=failure&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
             exit();
         }
     } else if (filter_input(INPUT_GET, 'action') == 'enable-student') {
@@ -82,13 +98,13 @@ if (isset($_GET['action'])) {
         if ($student_update_query_result == 1) {
 
             //Update Success
-            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=success4&stream-id=" . $_GET['stream-id']);
+            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=success4&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
             exit();
 
         } else {
 
             //Update Failure
-            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=failure&stream-id=" . $_GET['stream-id']);
+            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=failure&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
             exit();
         }
     }
@@ -129,7 +145,7 @@ print_head("Admin", "Current Students");
                 if (filter_input(INPUT_GET, 'message') == 'success') {
 
                     echo '<br>
-            <div class="alert alert-success"><b>Well done!</b> Student Verified successfully, Credentials : student' . filter_input(INPUT_GET, 'random') . ' & password' . filter_input(INPUT_GET, 'random') . '</div>';
+            <div class="alert alert-success"><b>Well done!</b> Student Verified successfully, Credentials : kkms' . filter_input(INPUT_GET, 'random') . ' & kkms' . filter_input(INPUT_GET, 'random') . '</div>';
 
                 } else if (filter_input(INPUT_GET, 'message') == 'success2') {
 
@@ -154,7 +170,7 @@ print_head("Admin", "Current Students");
             }
             ?>
 
-            <h3>Current Students</h3>
+            <h3>Current Students - <?php echo $_GET['stream-name'] ?></h3>
 
             <div class="row mt">
                 <div class="col-md-12">
@@ -164,9 +180,10 @@ print_head("Admin", "Current Students");
                             <thead>
                             <tr>
                                 <th><i class="fa fa-bullhorn"></i> Full Name</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Studying Course</th>
+                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Batch</th>
                                 <th><i class="fa fa-bookmark"></i> Mobile Number</th>
                                 <th><i class="fa fa-bookmark"></i> Email ID</th>
+                                <th><i class="fa fa-bookmark"></i> Credentials</th>
                                 <th><i class=" fa fa-edit"></i> Actions</th>
                             </tr>
                             </thead>
@@ -175,23 +192,27 @@ print_head("Admin", "Current Students");
                             while ($student_fetch_query_result_row = mysqli_fetch_assoc($student_fetch_query_result)) {
 
                                 echo '<tr>
-                                <td><a href="#">' . $student_fetch_query_result_row['full_name'] . '</a></td>
-                                <td>' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '</td>
-                                <td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
+                                <td><a href="#">' . $student_fetch_query_result_row['full_name'] . '</a></td>';
+                                $batchSelectSql = "SELECT `batch_name` FROM `batchs` WHERE `stream_id`=" . $_GET['stream-id'];
+                                $batchSelectSqlResult = $db_connection->query($batchSelectSql);
+                                $batchSelectSqlResultRow = mysqli_fetch_assoc($batchSelectSqlResult);
+                                echo '<td > ' . $batchSelectSqlResultRow['batch_name'] . ' </td >';
+                                echo '<td>' . $student_fetch_query_result_row['mobile_number'] . '</td>
                                 <td>' . $student_fetch_query_result_row['email_address'] . '</td>
+                                <td>' . $student_fetch_query_result_row['username'] . ' - ' . $student_fetch_query_result_row['password'] . '</td>
                                 <td>';
                                 if ($student_fetch_query_result_row['status'] == '0') {
 
-                                    echo ' <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=verify-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
-                                    <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button></a>';
+                                    echo ' <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=verify-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
+                                    <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button></a>';
 
                                 } else if ($student_fetch_query_result_row['status'] == '1') {
 
-                                    echo '<a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=enable-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-unlock"></i></button></a>';
+                                    echo '<a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=enable-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-unlock"></i></button></a>';
 
                                 } else if ($student_fetch_query_result_row['status'] == '2') {
 
-                                    echo '<a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=suspend-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-lock" aria-hidden="true"></i></button></a>';
+                                    echo '<a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=suspend-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-lock" aria-hidden="true"></i></button></a>';
 
                                 }
                                 echo '</td>

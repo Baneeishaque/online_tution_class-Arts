@@ -259,7 +259,7 @@ function print_sidebar($main_section, $sub_section, $db_connection)
         if ($sub_section == $assigned_courses_sql_result_row['stream_id']) {
             echo 'class="active"';
         }
-        echo '><a href="admin_unverified_students.php?stream-id=' . $assigned_courses_sql_result_row['stream_id'] . '">' . $assigned_courses_sql_result_row['course_name'] . ' ' . $assigned_courses_sql_result_row['stream_name'] . '</a></li>';
+        echo '><a href="admin_unverified_students.php?stream-id=' . $assigned_courses_sql_result_row['stream_id'] . '&stream-name=' . $assigned_courses_sql_result_row['course_name'] . ' ' . $assigned_courses_sql_result_row['stream_name'] . '">' . $assigned_courses_sql_result_row['course_name'] . ' ' . $assigned_courses_sql_result_row['stream_name'] . '</a></li>';
     }
 
     echo '          </ul>
