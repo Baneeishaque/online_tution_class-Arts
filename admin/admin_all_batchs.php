@@ -3,11 +3,11 @@ include_once '../db_config.php';
 
 if (isset($_GET['action'])) {
 
-    if (filter_input(INPUT_GET, 'action') == 'delete-subject') {
+    if (filter_input(INPUT_GET, 'action') == 'delete-batch') {
 
-        $subject_id = filter_input(INPUT_GET, 'subject-id');
+        $batch_id = filter_input(INPUT_GET, 'batch-id');
 
-        $student_fetch_sql = "SELECT `subject_id` FROM `subjects`,`students` WHERE `subjects`.`stream_id`=`students`.`studying_class` AND `subject_id`='$subject_id'";
+        $student_fetch_sql = "SELECT `batch_number` FROM `students` WHERE `batch_number`='$batch_id'";
         $student_fetch_sql_result = $db_connection->query($student_fetch_sql);
         if (mysqli_num_rows($student_fetch_sql_result) != 0) {
 
@@ -16,18 +16,9 @@ if (isset($_GET['action'])) {
             exit();
         }
 
-        $teacher_fetch_sql = "SELECT `assign_id` FROM `assigns` WHERE `subject_id`='$subject_id'";
-        $teacher_fetch_sql_result = $db_connection->query($teacher_fetch_sql);
-        if (mysqli_num_rows($teacher_fetch_sql_result) != 0) {
-
-            //There are students
-            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=still-teachers");
-            exit();
-        }
-
-        $subject_delete_sql = "DELETE FROM `subjects` WHERE `subject_id`='$subject_id'";
-        $subject_delete_query_result = $db_connection->query($subject_delete_sql);
-        if ($subject_delete_query_result == 1) {
+        $batch_delete_sql = "DELETE FROM `batchs` WHERE `batch_id`='$batch_id'";
+        $batch_delete_query_result = $db_connection->query($batch_delete_sql);
+        if ($batch_delete_query_result == 1) {
 
             //Delete Success
             header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=success");
@@ -42,16 +33,16 @@ if (isset($_GET['action'])) {
     }
 }
 
-$subject_fetch_sql = "SELECT `subject_id`,`courses`.`course_name`,`streams`.`stream_name`, `subject_name` FROM `subjects`,`streams`,`courses` WHERE `subjects`.`stream_id`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
+$batch_fetch_sql = "SELECT `batch_id`, `batch_name`, `batchs`.`stream_id`,`streams`.`stream_name`,`courses`.`course_name` FROM `batchs`,`streams`,`courses` WHERE `batchs`.`stream_id`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
 
-$subject_fetch_query_result = $db_connection->query($subject_fetch_sql);
+$batch_fetch_query_result = $db_connection->query($batch_fetch_sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <?php
 include_once 'head_for_admin.php';
-print_head("Admin", "All Subjects");
+print_head("Admin", "All Batchs");
 ?>
 
 <body>
@@ -63,7 +54,7 @@ print_head("Admin", "All Subjects");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Courses", "All Subjects", $db_connection);
+    print_sidebar("Courses", "All Batchs", $db_connection);
     ?>
 
     <!--main content start-->
@@ -76,7 +67,7 @@ print_head("Admin", "All Subjects");
                 if (filter_input(INPUT_GET, 'message') == 'success') {
 
                     echo '<br>
-            <div class="alert alert-success"><b>Well done!</b> Subject Deleted successfully...</div>';
+            <div class="alert alert-success"><b>Well done!</b> Batch Deleted successfully...</div>';
 
                 } elseif (filter_input(INPUT_GET, 'message') == 'failure') {
 
@@ -86,7 +77,7 @@ print_head("Admin", "All Subjects");
                 } elseif (filter_input(INPUT_GET, 'message') == 'still-students') {
 
                     echo '<br>
-            <div class="alert alert-danger"><b>Oh snap!</b> There are registered students for this subject...</div>';
+            <div class="alert alert-danger"><b>Oh snap!</b> There are registered students for this batch...</div>';
                 } elseif (filter_input(INPUT_GET, 'message') == 'still-teachers') {
 
                     echo '<br>
@@ -95,7 +86,7 @@ print_head("Admin", "All Subjects");
             }
             ?>
 
-            <h3>Current Subjects</h3>
+            <h3>Current Batchs</h3>
 
             <div class="row mt">
                 <div class="col-md-12">
@@ -105,7 +96,7 @@ print_head("Admin", "All Subjects");
                             <thead>
                             <tr>
                                 <th><i class="fa fa-bullhorn"></i> Sl. No.</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Subject Name With Stream
+                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Batch Name With Stream
                                     & Course
                                 </th>
                                 <th><i class=" fa fa-edit"></i> Actions</th>
@@ -114,13 +105,13 @@ print_head("Admin", "All Subjects");
                             <tbody>
                             <?php
                             $i = 1;
-                            while ($subject_fetch_query_result_row = mysqli_fetch_assoc($subject_fetch_query_result)) {
+                            while ($batch_fetch_query_result_row = mysqli_fetch_assoc($batch_fetch_query_result)) {
 
                                 echo '<tr>
                                 <td>' . $i . '</td>
-                                <td>' . $subject_fetch_query_result_row['subject_name'] . ' - ' . $subject_fetch_query_result_row['course_name'] . ' ' . $subject_fetch_query_result_row['stream_name'] . '</td>
+                                <td>' . $batch_fetch_query_result_row['batch_name'] . ' - ' . $batch_fetch_query_result_row['course_name'] . ' ' . $batch_fetch_query_result_row['stream_name'] . '</td>
                                 <td>
-                                      <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-subject&subject-id=' . $subject_fetch_query_result_row['subject_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></a>
+                                      <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-batch&batch-id=' . $batch_fetch_query_result_row['batch_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></a>
                                   </td>
                             </tr>';
                                 $i++;

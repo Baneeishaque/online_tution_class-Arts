@@ -184,7 +184,7 @@ function print_sidebar($main_section, $sub_section, $db_connection)
         echo 'class="active"';
     }
 
-    echo '><a href="#">Add Batchs</a></li>
+    echo '><a href="admin_add_batch.php">Add Batchs</a></li>
                         <li ';
 
     if ($sub_section == "All Batchs") {
@@ -192,7 +192,7 @@ function print_sidebar($main_section, $sub_section, $db_connection)
         echo 'class="active"';
     }
 
-    echo '><a href="#">All Batchs</a></li>
+    echo '><a href="admin_all_batchs.php">All Batchs</a></li>
                         
                     </ul>
                 </li>
