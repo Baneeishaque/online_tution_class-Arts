@@ -1,9 +1,22 @@
 <?php
 include_once '../db_config.php';
 
-if (isset($_POST['submit'])) {
+function checkExistingUsername($dbConnection)
+{
+    $random_number = rand(0, 999);
+    $studentFetchSql = "SELECT `teacher_id` FROM `teachers` WHERE `username`='teacher$random_number'";
+    $studentFetchSqlResult = $dbConnection->query($studentFetchSql);
+    if (mysqli_num_rows($studentFetchSqlResult) != 0) {
 
-//    echo 'from submission section';
+        checkExistingUsername($dbConnection);
+
+    } else {
+
+        return $random_number;
+    }
+}
+
+if (isset($_POST['submit'])) {
 
     //TODO : Unique Mobile Number - db
     //TODO : Unique Email ID - db
@@ -12,7 +25,7 @@ if (isset($_POST['submit'])) {
     $mobile_number = filter_input(INPUT_POST, 'mobile_number');
     $email_address = filter_input(INPUT_POST, 'email_address');
 
-    $random_number = rand(0, 999);
+    $random_number = checkExistingUsername($db_connection);
     $teacher_insertion_sql = "INSERT INTO `teachers`(`full_name`, `mobile_number`, `email_address`,`status`,`username`,`password`) VALUES ('$full_name','$mobile_number','$email_address',1,'teacher$random_number','password$random_number')";
 
     $teacher_insertion_query_result = $db_connection->query($teacher_insertion_sql);
