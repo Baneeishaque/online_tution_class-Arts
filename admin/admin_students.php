@@ -110,7 +110,7 @@ if (isset($_GET['action'])) {
     }
 }
 
-$student_fetch_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name` FROM `students`,`courses`,`streams` WHERE `studying_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id` AND `streams`.`stream_id`='" . $_GET['stream-id'] . "' ORDER BY `status` DESC,`students`.`full_name` ASC";
+$student_fetch_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name`,`batch_number` FROM `students`,`courses`,`streams` WHERE `studying_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id` AND `streams`.`stream_id`='" . $_GET['stream-id'] . "' ORDER BY `status` DESC,`students`.`full_name` ASC";
 //echo $student_fetch_sql;
 
 $student_fetch_query_result = $db_connection->query($student_fetch_sql);
@@ -193,7 +193,7 @@ print_head("Admin", "Students");
 
                                 echo '<tr>
                                 <td><a href="#">' . $student_fetch_query_result_row['full_name'] . '</a></td>';
-                                $batchSelectSql = "SELECT `batch_name` FROM `batchs` WHERE `stream_id`=" . $_GET['stream-id'];
+                                $batchSelectSql = "SELECT `batch_name` FROM `batchs` WHERE `batch_id`=" . $student_fetch_query_result_row['batch_number'];
                                 $batchSelectSqlResult = $db_connection->query($batchSelectSql);
                                 $batchSelectSqlResultRow = mysqli_fetch_assoc($batchSelectSqlResult);
                                 echo '<td > ' . $batchSelectSqlResultRow['batch_name'] . ' </td >';
@@ -203,7 +203,7 @@ print_head("Admin", "Students");
                                 <td>';
                                 if ($student_fetch_query_result_row['status'] == '0') {
 
-                                    echo ' <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=verify-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
+                                    echo ' <a href="admin_student_profile.php?student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '&full-name=' . $student_fetch_query_result_row['full_name'] . '&mobile-number=' . $student_fetch_query_result_row['mobile_number'] . '&email-address=' . $student_fetch_query_result_row['email_address'] . '&batch-number=' . $student_fetch_query_result_row['batch_number'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
                                     <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button></a>';
 
                                 } else if ($student_fetch_query_result_row['status'] == '1') {
