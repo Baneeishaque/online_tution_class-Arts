@@ -27,7 +27,21 @@ print_head("Admin", "All Streams");
     <section id="main-content">
         <section class="wrapper">
 
-            <h3>Current Streams</h3>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <h3>Current Streams</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="admin_add_stream.php">
+                                <button class="btn btn-primary btn-block">Add Streams</button>
+                            </a>
+                        </div>
+                    </div>
+                </div><!-- /row -->
+            </div>
 
             <div class="row mt">
                 <div class="col-md-12">

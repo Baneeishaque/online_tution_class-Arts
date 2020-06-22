@@ -120,7 +120,7 @@ $student_fetch_query_result = $db_connection->query($student_fetch_sql);
 
 <?php
 include_once 'head_for_admin.php';
-print_head("Admin", "Current Students");
+print_head("Admin", "Students");
 ?>
 
 <body>
@@ -132,7 +132,7 @@ print_head("Admin", "Current Students");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Current Students", $_GET['stream-id'], $db_connection);
+    print_sidebar("Students", $_GET['stream-id'], $db_connection);
     ?>
 
     <!--main content start-->

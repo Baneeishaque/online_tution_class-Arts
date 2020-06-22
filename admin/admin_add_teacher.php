@@ -60,7 +60,7 @@ print_head("Admin", "Add Teachers");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Teachers", "Add Teachers", $db_connection);
+    print_sidebar("Teachers", "All Teachers", $db_connection);
     ?>
 
     <!--main content start-->

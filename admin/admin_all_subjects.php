@@ -95,7 +95,21 @@ print_head("Admin", "All Subjects");
             }
             ?>
 
-            <h3>Current Subjects</h3>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <h3>Current Subjects</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="admin_add_subject.php">
+                                <button class="btn btn-primary btn-block">Add Subjects</button>
+                            </a>
+                        </div>
+                    </div>
+                </div><!-- /row -->
+            </div>
 
             <div class="row mt">
                 <div class="col-md-12">

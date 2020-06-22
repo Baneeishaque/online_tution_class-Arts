@@ -51,7 +51,7 @@ print_head("Admin", "Add Batchs");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Courses", "Add Batchs", $db_connection);
+    print_sidebar("Courses", "All Batchs", $db_connection);
     ?>
 
     <!--main content start-->

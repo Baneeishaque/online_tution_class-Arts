@@ -30,8 +30,21 @@ print_head("Admin", "All Courses");
     <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
-
-            <h3>Current Courses</h3>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <h3>Current Courses</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="admin_add_course.php">
+                                <button class="btn btn-primary btn-block">Add Courses</button>
+                            </a>
+                        </div>
+                    </div>
+                </div><!-- /row -->
+            </div>
 
             <div class="row mt">
                 <div class="col-md-12">

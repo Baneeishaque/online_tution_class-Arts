@@ -71,7 +71,21 @@ print_head("Admin", "All Teachers");
             }
             ?>
 
-            <h3>All Teachers</h3>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <h3>All Teachers</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="admin_add_teacher.php">
+                                <button class="btn btn-primary btn-block">Add Teachers</button>
+                            </a>
+                        </div>
+                    </div>
+                </div><!-- /row -->
+            </div>
 
             <div class="row mt">
                 <div class="col-md-12">

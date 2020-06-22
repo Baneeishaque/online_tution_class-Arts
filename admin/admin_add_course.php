@@ -43,7 +43,7 @@ print_head("Admin", "Add Courses");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Courses", "Add Courses", $db_connection);
+    print_sidebar("Courses", "All Courses", $db_connection);
     ?>
 
     <!--main content start-->

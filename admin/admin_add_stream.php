@@ -51,7 +51,7 @@ print_head("Admin", "Add Streams");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Courses", "Add Streams", $db_connection);
+    print_sidebar("Courses", "All Streams", $db_connection);
     ?>
 
     <!--main content start-->
@@ -78,7 +78,7 @@ print_head("Admin", "Add Streams");
             }
             ?>
 
-            <h3>Add Subject</h3>
+            <h3>Add Stream</h3>
 
             <div class="row mt">
                 <div class="col-lg-12">
