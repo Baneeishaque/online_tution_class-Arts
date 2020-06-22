@@ -9,6 +9,13 @@
           </advancedOptions>
         </fileTransfer>
       </webServer>
+      <webServer id="223d1c95-30ef-42b5-b2c3-61fe64c96c3f" name="tirurartscollege.com" url="https://tirurartscollege.com/online">
+        <fileTransfer rootFolder="/home/tirurartscollege/public_html/online" accessType="SFTP" host="160.153.234.124" port="22" sshConfigId="0ae1cd57-8736-4691-8c8b-7dbf26a48a49" sshConfig="tirurartscollege@160.153.234.124:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>
