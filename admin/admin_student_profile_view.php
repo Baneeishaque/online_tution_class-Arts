@@ -7,60 +7,6 @@ if ((!isset($_GET['student-id'])) || (!isset($_GET['stream-id'])) || (!isset($_G
     header('Location: admin_current_teachers.php');
     exit;
 }
-function checkExistingUsername($dbConnection)
-{
-    $random_number = rand(0, 999);
-    $studentFetchSql = "SELECT `student_id` FROM `students` WHERE `username`='tacs$random_number'";
-    $studentFetchSqlResult = $dbConnection->query($studentFetchSql);
-    if (mysqli_num_rows($studentFetchSqlResult) != 0) {
-
-        checkExistingUsername($dbConnection);
-
-    } else {
-
-        return $random_number;
-    }
-}
-
-if (isset($_POST['submit'])) {
-
-//    var_dump($_POST);
-//    var_dump($_FILES);
-
-    //        TODO : Check NA
-
-    $student_id = filter_input(INPUT_GET, 'student-id');
-    $random_number = checkExistingUsername($db_connection);
-
-    $photo_file = $_POST['photo_file'];
-    $target_dir = "photos/";
-    $file_name = $_FILES["photo_file"]["name"];
-    $target_file = $target_dir . basename($_FILES["photo_file"]["name"]);
-    move_uploaded_file($_FILES["photo_file"]["tmp_name"], $target_file);
-
-    $student_update_sql = "UPDATE `students` SET `full_name`='" . $_POST['full_name'] . "',`mobile_number`='" . $_POST['mobile_number'] . "',`email_address`='" . $_POST['email_address'] . "',`studying_class`='" . $_POST['studying_class'] . "',`status`=2,`username`='tacs$random_number',`password`='tacs$random_number',`batch_number`='" . $_POST['batch_number'] . "',`additional_mobile`='" . $_POST['additional_mobile_number'] . "',`additional_email`='" . $_POST['additional_email_address'] . "',`photo`='$file_name' WHERE `student_id`='$student_id'";
-//        echo $student_update_sql;
-
-    $student_update_query_result = $db_connection->query($student_update_sql);
-
-    if ($student_update_query_result == 1) {
-
-        //Update Success
-        header("Location: admin_students.php?message=success&random=$random_number&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
-        exit();
-
-    } else {
-
-//            echo $db_connection->error;
-        //Update Failure
-//        TODO : Redirect wth data
-        header("Location: admin_students.php?message=failure&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
-        exit();
-    }
-
-}
-
-
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +14,7 @@ if (isset($_POST['submit'])) {
 
 <?php
 include_once 'head_for_admin.php';
-print_head("Admin", "Confirm Student");
+print_head("Admin", "View Student");
 ?>
 
 <body>
@@ -87,7 +33,18 @@ print_head("Admin", "Confirm Student");
     <section id="main-content">
         <section class="wrapper">
 
-            <h3>Confirm Student - <?php echo $_GET['full-name']; ?></h3>
+            <!--            <h3>View Student - --><?php //echo $_GET['full-name']; ?><!--</h3>-->
+            <?php
+
+            if (isset($_GET['photo'])) {
+
+                echo '<p class="centered"><a href="#"><img src="photos/' . $_GET['photo'] . '" width="100"></a></p>';
+
+            } else {
+
+                echo '<p class="centered"><a href="#"><img src="../assets/img/logo.jpg" width="100"></a></p>';
+            }
+            ?>
 
             <div class="row mt">
                 <div class="col-lg-12">
@@ -99,14 +56,14 @@ print_head("Admin", "Confirm Student");
                                 <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Full Name</label>
                                 <div class="col-lg-10">
                                     <input type="text" class="form-control" id="inputSuccess" name="full_name" required
-                                           value="<?php echo $_GET['full-name']; ?>">
+                                           value="<?php echo $_GET['full-name']; ?>" disabled>
                                 </div>
                             </div>
                             <div class="form-group has-error">
                                 <label class="col-sm-2 control-label col-lg-2" for="inputError">Mobile Number</label>
                                 <div class="col-lg-10">
                                     <input type="number" class="form-control" id="inputError" name="mobile_number"
-                                           required value="<?php echo $_GET['mobile-number']; ?>">
+                                           required value="<?php echo $_GET['mobile-number']; ?>" disabled>
                                 </div>
                             </div>
                             <div class="form-group has-error">
@@ -117,14 +74,14 @@ print_head("Admin", "Confirm Student");
                                            name="additional_mobile_number"
                                            value="<?php if (isset($_GET['additional-mobile-number'])) {
                                                echo $_GET['additional-mobile-number'];
-                                           } ?>">
+                                           } ?>" disabled>
                                 </div>
                             </div>
                             <div class="form-group has-warning">
                                 <label class="col-sm-2 control-label col-lg-2" for="inputWarning">Email Address</label>
                                 <div class="col-lg-10">
                                     <input type="email" class="form-control" id="inputWarning" name="email_address"
-                                           required value="<?php echo $_GET['email-address']; ?>">
+                                           required value="<?php echo $_GET['email-address']; ?>" disabled>
                                 </div>
                             </div>
                             <div class="form-group has-error">
@@ -135,13 +92,13 @@ print_head("Admin", "Confirm Student");
                                            name="additional_email_address"
                                            value="<?php if (isset($_GET['additional-email-address'])) {
                                                echo $_GET['additional-email-address'];
-                                           } ?>">
+                                           } ?>" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label col-lg-2">Stream</label>
                                 <div class="col-lg-10">
-                                    <select class="form-control" name="studying_class" id="studying_course">
+                                    <select class="form-control" name="studying_class" disabled>
                                         <option value="NA">Select Please...</option>
                                         <?php
 
@@ -177,7 +134,7 @@ print_head("Admin", "Confirm Student");
 
                                     } else {
 
-                                        echo '<select class="form-control" name="batch_number">';
+                                        echo '<select class="form-control" name="batch_number" disabled>';
                                         echo '  <option value="NA">Select Please...</option>';
 
                                         while ($batchSelectSqlResultRow = mysqli_fetch_assoc($batchSelectSqlResult)) {
@@ -196,23 +153,12 @@ print_head("Admin", "Confirm Student");
                                     ?>
                                 </div>
                             </div>
-                            <div class="form-group has-error">
-                                <label class="col-sm-2 control-label col-lg-2" for="inputError">Photo File</label>
-                                <div class="col-lg-10">
-                                    <input type="file" class="form-control" id="inputError" name="photo_file"
-                                           value="<?php if (isset($_GET['photo'])) {
-                                               echo $_GET['photo'];
-                                           } ?>" required>
-                                </div>
-                            </div>
-
                             <br>
                             <div class="form-group has-error">
                                 <center>
-                                    <a href="<?php echo basename($_SERVER["SCRIPT_FILENAME"]); ?>">
-                                        <button type="button" class="btn btn-danger">Reset</button>
+                                    <a href="<?php echo 'admin_student_profile.php?student-id=' . $_GET['student-id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $_GET['stream-name'] . '&full-name=' . $_GET['full-name'] . '&mobile-number=' . $_GET['mobile-number'] . '&email-address=' . $_GET['email-address'] . '&batch-number=' . $_GET['batch-number'] . '&additional-mobile-number=' . $_GET['additional-mobile-number'] . '&additional-email-address=' . $_GET['additional-email-address'] . '&photo=' . $_GET['photo']; ?>">
+                                        <button type="button" class="btn btn-danger">Update Profile</button>
                                     </a>
-                                    <button class="btn btn-success" type="submit" name="submit">Submit</button>
                                 </center>
                             </div>
                         </form>

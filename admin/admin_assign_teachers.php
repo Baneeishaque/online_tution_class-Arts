@@ -82,7 +82,7 @@ print_head("Admin", "Assign Teachers");
                                         <option value="NA">Select Please...</option>
                                         <?php
 
-                                        $subject_fetch_sql = "SELECT `subject_id`,`courses`.`course_name`,`streams`.`stream_name`, `subject_name` FROM `subjects`,`streams`,`courses` WHERE `subjects`.`stream_id`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
+                                        $subject_fetch_sql = "SELECT `subject_id`,`courses`.`course_name`,`streams`.`stream_name`, `subject_name` FROM `subjects`,`streams`,`courses` WHERE `subjects`.`stream_id`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id` ORDER BY `subject_name`";
 
                                         $subject_fetch_query_result = $db_connection->query($subject_fetch_sql);
 
@@ -101,7 +101,7 @@ print_head("Admin", "Assign Teachers");
                                         <option value="NA">Select Please...</option>
                                         <?php
 
-                                        $subject_fetch_sql = "SELECT `teacher_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password` FROM `teachers`";
+                                        $subject_fetch_sql = "SELECT `teacher_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password` FROM `teachers` WHERE `status`!=3 ORDER BY `full_name`";
 
                                         $subject_fetch_query_result = $db_connection->query($subject_fetch_sql);
 
