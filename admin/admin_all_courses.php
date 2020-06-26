@@ -1,11 +1,43 @@
 <?php
 
 include_once '../db_config.php';
+if (isset($_GET['action'])) {
+    if (filter_input(INPUT_GET, 'action') == 'delete-course') {
 
-$student_fetch_sql = "SELECT `course_id`, `course_name` FROM `courses`";
-//    echo $student_login_sql;
+        $course_id = filter_input(INPUT_GET, 'course-id');
 
-$student_fetch_query_result = $db_connection->query($student_fetch_sql);
+        $stream_fetch_sql = "SELECT `stream_id` FROM `streams`,`courses` WHERE `streams`.`course_id`=`courses`.`course_id` AND `courses`.`course_id` = '$course_id'";
+        $stream_fetch_sql_result = $db_connection->query($stream_fetch_sql);
+        if (mysqli_num_rows($stream_fetch_sql_result) != 0) {
+
+            //There are students
+            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=still-streams");
+            exit();
+        }
+
+        $course_delete_sql = "DELETE FROM `courses` WHERE `course_id`='$course_id'";
+
+        $course_delete_query_result = $db_connection->query($course_delete_sql);
+
+        if ($course_delete_query_result == 1) {
+
+            //Update Success
+            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=success");
+            exit();
+
+        } else {
+
+//            echo $db_connection->error;
+            //Update Failure
+            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=failure");
+            exit();
+        }
+
+    }
+}
+
+$stream_fetch_sql = "SELECT `course_id`, `course_name` FROM `courses`";
+$student_fetch_query_result = $db_connection->query($stream_fetch_sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,6 +62,28 @@ print_head("Admin", "All Courses");
     <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
+
+            <?php
+            if (isset($_GET['message'])) {
+
+                if (filter_input(INPUT_GET, 'message') == 'still-streams') {
+
+                    echo '<br>
+                    <div class="alert alert-danger"><b>Oh snap!</b> There are still streams for this course...</div>';
+
+                } else if (filter_input(INPUT_GET, 'message') == 'success') {
+
+                    echo '<br>
+            <div class="alert alert-success"><b>Well done!</b> Course Deleted successfully...</div>';
+
+                } elseif (filter_input(INPUT_GET, 'message') == 'failure') {
+
+                    echo '<br>
+            <div class="alert alert-danger"><b>Oh snap!</b> Try Again...</div>';
+                }
+            }
+            ?>
+
             <br>
             <div class="container">
                 <div class="row">
@@ -59,11 +113,13 @@ print_head("Admin", "All Courses");
                             </thead>
                             <tbody>
                             <?php
+                            $i = 1;
                             while ($student_fetch_query_result_row = mysqli_fetch_assoc($student_fetch_query_result)) {
 
                                 echo '<tr>
-                                <td><a href="#">' . $student_fetch_query_result_row['course_id'] . '</a></td>
+                                <td>' . $i++ . '</td>
                                 <td>' . $student_fetch_query_result_row['course_name'] . '</td>
+                                <td><a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-course&course-id=' . $student_fetch_query_result_row['course_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button></a></td>
                             </tr>';
                             }
                             ?>

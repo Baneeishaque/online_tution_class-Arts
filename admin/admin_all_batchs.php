@@ -78,10 +78,6 @@ print_head("Admin", "All Batchs");
 
                     echo '<br>
             <div class="alert alert-danger"><b>Oh snap!</b> There are registered students for this batch...</div>';
-                } elseif (filter_input(INPUT_GET, 'message') == 'still-teachers') {
-
-                    echo '<br>
-            <div class="alert alert-danger"><b>Oh snap!</b> There are assigned teachers for this subject...</div>';
                 }
             }
             ?>
@@ -122,13 +118,12 @@ print_head("Admin", "All Batchs");
                             while ($batch_fetch_query_result_row = mysqli_fetch_assoc($batch_fetch_query_result)) {
 
                                 echo '<tr>
-                                <td>' . $i . '</td>
+                                <td>' . $i++ . '</td>
                                 <td>' . $batch_fetch_query_result_row['batch_name'] . ' - ' . $batch_fetch_query_result_row['course_name'] . ' ' . $batch_fetch_query_result_row['stream_name'] . '</td>
                                 <td>
                                       <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-batch&batch-id=' . $batch_fetch_query_result_row['batch_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></a>
                                   </td>
                             </tr>';
-                                $i++;
                             }
                             ?>
 

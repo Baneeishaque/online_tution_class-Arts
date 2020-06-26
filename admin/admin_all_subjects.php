@@ -7,15 +7,6 @@ if (isset($_GET['action'])) {
 
         $subject_id = filter_input(INPUT_GET, 'subject-id');
 
-        $student_fetch_sql = "SELECT `subject_id` FROM `subjects`,`students` WHERE `subjects`.`stream_id`=`students`.`studying_class` AND `subject_id`='$subject_id'";
-        $student_fetch_sql_result = $db_connection->query($student_fetch_sql);
-        if (mysqli_num_rows($student_fetch_sql_result) != 0) {
-
-            //There are students
-            header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=still-students");
-            exit();
-        }
-
         $teacher_fetch_sql = "SELECT `assign_id` FROM `assigns` WHERE `subject_id`='$subject_id'";
         $teacher_fetch_sql_result = $db_connection->query($teacher_fetch_sql);
         if (mysqli_num_rows($teacher_fetch_sql_result) != 0) {
@@ -24,6 +15,7 @@ if (isset($_GET['action'])) {
             header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=still-teachers");
             exit();
         }
+//        TODO : Check notes too
 
         $subject_delete_sql = "DELETE FROM `subjects` WHERE `subject_id`='$subject_id'";
         $subject_delete_query_result = $db_connection->query($subject_delete_sql);
