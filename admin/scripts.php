@@ -9,11 +9,11 @@ include_once 'index_scripts_for_admin.php';
 <script src="../assets/js/common-scripts.js"></script>
 
 <!--script for this page-->
-<script>
-    //custom select box
-
-    $(function () {
-        $('select.styled').customSelect();
-    });
-
-</script>
+<!--<script>-->
+<!--    //custom select box-->
+<!---->
+<!--    $(function () {-->
+<!--        $('select.styled').customSelect();-->
+<!--    });-->
+<!---->
+<!--</script>-->

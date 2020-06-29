@@ -113,7 +113,7 @@ print_head("Admin", "Confirm Student");
                                 <label class="col-sm-2 control-label col-lg-2" for="inputError">Additional Mobile
                                     Numbers</label>
                                 <div class="col-lg-10">
-                                    <input type="number" class="form-control" id="inputError"
+                                    <input type="text" class="form-control" id="inputError"
                                            name="additional_mobile_number"
                                            value="<?php if (isset($_GET['additional-mobile-number'])) {
                                                echo $_GET['additional-mobile-number'];

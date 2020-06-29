@@ -102,6 +102,13 @@ function print_sidebar($main_section, $sub_section, $db_connection)
     echo '><a href="admin_assign_teachers.php">Assign Teachers</a></li>
                         <li ';
 
+    if ($sub_section == "Unassign Teachers") {
+
+        echo 'class="active"';
+    }
+
+    echo '><a href="admin_unassign_teachers.php">Unassign Teachers</a></li><li ';
+
     if ($sub_section == "Unassigned Teachers") {
 
         echo 'class="active"';

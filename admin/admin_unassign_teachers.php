@@ -4,15 +4,27 @@ include_once '../db_config.php';
 if (isset($_POST['submit'])) {
 
 //    echo 'from submission section';
+//    var_dump($_POST);
 
-    $teacher_id = filter_input(INPUT_POST, 'teacher-id');
-    $subject_id = filter_input(INPUT_POST, 'subject-id');
+    $subject_id = filter_input(INPUT_POST, 'subject_id');
+    if ($subject_id == "NA") {
 
-    $teacher_assign_sql = "INSERT INTO `assigns`(`teacher_id`, `subject_id`) VALUES ('$teacher_id','$subject_id')";
+        header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=no-subject");
+        exit();
+    }
 
-    $teacher_assign_query_result = $db_connection->query($teacher_assign_sql);
+    $teacher_id = filter_input(INPUT_POST, 'teacher_id');
+    if ($teacher_id == "NA") {
 
-    if ($teacher_assign_query_result == 1) {
+        header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=no-teacher");
+        exit();
+    }
+
+    $teacher_unassign_sql = "DELETE FROM `assigns` WHERE `subject_id`='$subject_id' AND `teacher_id`='$teacher_id'";
+
+    $teacher_unassign_query_result = $db_connection->query($teacher_unassign_sql);
+
+    if ($teacher_unassign_query_result == 1) {
 
         //Insertion Success
         header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=success");
@@ -44,7 +56,7 @@ print_head("Admin", "Assign Teachers");
     print_header("admin");
 
     include_once 'admin_sidebar.php';
-    print_sidebar("Teachers", "Assign Teachers", $db_connection);
+    print_sidebar("Teachers", "Unassign Teachers", $db_connection);
     ?>
 
     <!--main content start-->
@@ -63,11 +75,19 @@ print_head("Admin", "Assign Teachers");
 
                     echo '<br>
             <div class="alert alert-danger"><b>Oh snap!</b> Try Again...</div>';
+                } elseif (filter_input(INPUT_GET, 'message') == 'no-subject') {
+
+                    echo '<br>
+            <div class="alert alert-danger"><b>Oh snap!</b> Please select subject...</div>';
+                } elseif (filter_input(INPUT_GET, 'message') == 'no-teacher') {
+
+                    echo '<br>
+            <div class="alert alert-danger"><b>Oh snap!</b> Please select teacher...</div>';
                 }
             }
             ?>
 
-            <h3>Assign Teacher</h3>
+            <h3>Unassign Teacher</h3>
 
             <div class="row mt">
                 <div class="col-lg-12">
@@ -78,11 +98,11 @@ print_head("Admin", "Assign Teachers");
                             <div class="form-group">
                                 <label class="col-sm-2 control-label col-lg-2">Subject With Stream</label>
                                 <div class="col-lg-10">
-                                    <select class="form-control" name="subject-id" required>
+                                    <select class="form-control" name="subject_id" id="subject_id">
                                         <option value="NA">Select Please...</option>
                                         <?php
 
-                                        $subject_fetch_sql = "SELECT `subject_id`,`courses`.`course_name`,`streams`.`stream_name`, `subject_name` FROM `subjects`,`streams`,`courses` WHERE `subjects`.`stream_id`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
+                                        $subject_fetch_sql = "SELECT DISTINCT `assigns`.`subject_id`,`courses`.`course_name`,`streams`.`stream_name`, `subject_name` FROM `assigns`,`subjects`,`streams`,`courses` WHERE `assigns`.`subject_id`=`subjects`.`subject_id` AND `subjects`.`stream_id`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id`";
 
                                         $subject_fetch_query_result = $db_connection->query($subject_fetch_sql);
 
@@ -97,19 +117,8 @@ print_head("Admin", "Assign Teachers");
                             <div class="form-group">
                                 <label class="col-sm-2 control-label col-lg-2">Teacher</label>
                                 <div class="col-lg-10">
-                                    <select class="form-control" name="teacher-id">
+                                    <select class="form-control" name="teacher_id" id="teacher_id" disabled>
                                         <option value="NA">Select Please...</option>
-                                        <?php
-
-                                        $subject_fetch_sql = "SELECT `teacher_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password` FROM `teachers`";
-
-                                        $subject_fetch_query_result = $db_connection->query($subject_fetch_sql);
-
-                                        while ($subject_fetch_query_result_row = mysqli_fetch_assoc($subject_fetch_query_result)) {
-
-                                            echo '<option value="' . $subject_fetch_query_result_row['teacher_id'] . '">' . $subject_fetch_query_result_row['full_name'] . ' ' . $subject_fetch_query_result_row['mobile_number'] . '</option>';
-                                        }
-                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -145,30 +154,44 @@ include_once 'scripts.php';
 
 <script>
     $(document).ready(function () {
-        $('#item_category').on('change', function () {
 
+        // alert("from script section...");
+        $('#subject_id').on('change', function () {
+
+            // alert("from script section...");
             //get selected value from category drop down
-            var category = $(this).val();
+            const subjectId = $(this).val();
 
             //select subcategory drop down
-            var selectSubCat = $('#item_sub_category');
+            const assignedTeachers = $('#teacher_id');
 
-            if (category != -1) {
+            if (subjectId !== "NA") {
 
-                // ask server for sub-categories
-                $.getJSON("getSubCategory.php?category=" + category)
-                    .done(function (result) {
-                        // append each sub-category to second drop down
-                        $.each(result, function (item) {
-                            selectSubCat.append($("<option />").val(item.subCategory).text(item.subCategory));
-                        });
-                        // enable sub-category drop down
-                        selectSubCat.prop('disabled', false);
-                    });
+                $.get("getAssigns.php?subject-id=" + subjectId, function (response) {
+
+                    console.log("Response : " + response);
+                    const assigns = JSON.parse(response);
+                    console.log("Assigns Count : " + assigns.length);
+                    assignedTeachers.empty();
+
+                    if (assigns.length > 0) {
+
+                        assignedTeachers.append($("<option />").val("NA").text("Select Please..."));
+                        assignedTeachers.prop('disabled', false);
+                    }
+
+                    for (let i = 0; i < assigns.length; i++) {
+
+                        console.log("Assigned Teacher ID : " + assigns[i].teacher_id);
+                        console.log("Assigned Teacher Name : " + assigns[i].full_name);
+                        assignedTeachers.append($("<option />").val(assigns[i].teacher_id).text(assigns[i].full_name + " - " + assigns[i].mobile_number));
+                    }
+
+                });
 
             } else {
                 // disable sub-category drop down
-                selectSubCat.prop('disabled', 'disabled');
+                assignedTeachers.prop('disabled', 'disabled');
             }
         });
     });

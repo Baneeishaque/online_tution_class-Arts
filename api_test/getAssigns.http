@@ -1,0 +1,2 @@
+GET https://tirurartscollege.com/online/admin/getAssigns.php?subject-id=4
+Accept: application/json
