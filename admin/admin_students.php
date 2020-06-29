@@ -110,7 +110,14 @@ if (isset($_GET['action'])) {
     }
 }
 
-$student_fetch_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name`,`batch_number`,`additional_mobile`,`additional_email`,`photo` FROM `students`,`courses`,`streams` WHERE `studying_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id` AND `streams`.`stream_id`='" . $_GET['stream-id'] . "' ORDER BY `status` DESC,`students`.`full_name` ASC";
+$student_fetch_sql = "SELECT `student_id`, `full_name`, `mobile_number`, `email_address`, `status`, `username`, `password`,`courses`.`course_id`,`courses`.`course_name`,`streams`.`stream_id`,`streams`.`stream_name`,`batch_number`,`additional_mobile`,`additional_email`,`photo` FROM `students`,`courses`,`streams` WHERE `studying_class`=`streams`.`stream_id` AND `streams`.`course_id`=`courses`.`course_id` AND `streams`.`stream_id`='" . $_GET['stream-id'] . "'";
+
+if (isset($_GET['batch-id'])) {
+
+    $student_fetch_sql = $student_fetch_sql . " AND `batch_number`=" . $_GET['batch-id'];
+}
+
+$student_fetch_sql = $student_fetch_sql . " ORDER BY `status` DESC,`batch_number` ASC, `students`.`full_name` ASC";
 //echo $student_fetch_sql;
 
 $student_fetch_query_result = $db_connection->query($student_fetch_sql);
@@ -170,7 +177,15 @@ print_head("Admin", "Students");
             }
             ?>
 
-            <h3>Current Students - <?php echo $_GET['stream-name'] ?></h3>
+            <h3>Current Students
+                - <?php if (isset($_GET['batch-id'])) {
+
+                    echo $_GET['stream-name'] . ' : ' . $_GET['batch-name'];
+
+                } else {
+
+                    echo $_GET['stream-name'];
+                } ?></h3>
 
             <div class="row mt">
                 <div class="col-md-12">

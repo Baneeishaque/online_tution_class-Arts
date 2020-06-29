@@ -14,45 +14,63 @@ function print_sidebar($main_section, $sub_section, $db_connection)
 
                 <h5 class="centered">Administrator</h5>';
 
-//                <li class="sub-menu">
-//                    <a ';
-//
-//    if ($main_section == "Students") {
-//
-//        echo 'class="active"';
-//    }
-//
-//    echo ' href="javascript:">
-//                        <i class="fa fa-th"></i>
-//                        <span>Students</span>
-//                    </a>
-//                    <ul class="sub">';
-//    echo '             <li ';
-//
-//    if ($sub_section == "Current Students") {
-//
-//        echo 'class="active"';
-//    }
-//
-//    echo '><a href="#">Current Students</a></li>
-//                        <li ';
-//
-//    if ($sub_section == "Suspended Students") {
-//
-//        echo 'class="active"';
-//    }
-//
-//    echo '><a href="#">Suspended Students</a></li>';
-//    echo '              <li ';
-//
-//    if ($sub_section == "Add Students") {
-//
-//        echo 'class="active"';
-//    }
-//
-//    echo '><a href="admin_add_student.php">Add Students</a></li>
-//                    </ul>
-//                </li>';
+    echo '<li class="sub-menu">
+                    <a ';
+
+    if ($main_section == "Students") {
+
+        echo 'class="active"';
+    }
+
+    echo ' href="javascript:">
+                        <i class=" fa fa-bar-chart-o"></i>
+                        <span>Students</span>
+                    </a>
+                    <ul class="sub">';
+
+    $stream_fetch_sql = "SELECT `streams`.`stream_id`,`streams`.`stream_name`,`courses`.`course_name` FROM `streams`,`courses` WHERE `streams`.`course_id`=`courses`.`course_id` ORDER BY `courses`.`course_name`,`streams`.`stream_name`";
+
+    $stream_fetch_sql_result = $db_connection->query($stream_fetch_sql);
+    while ($stream_fetch_sql_result_row = mysqli_fetch_assoc($stream_fetch_sql_result)) {
+
+        $batch_fetch_sql = "SELECT `batch_id`, `batch_name` FROM `batchs` WHERE `stream_id`='" . $stream_fetch_sql_result_row['stream_id'] . "'";
+        $batch_fetch_sql_result = $db_connection->query($batch_fetch_sql);
+        if (mysqli_num_rows($batch_fetch_sql_result) > 0) {
+
+            echo '<li class="sub-menu">
+    <a ';
+
+            if ($sub_section == $stream_fetch_sql_result_row['stream_id']) {
+                echo 'class="active"';
+            }
+
+            echo ' href="javascript:">
+        <span>' . $stream_fetch_sql_result_row['course_name'] . ' ' . $stream_fetch_sql_result_row['stream_name'] . '</span>
+    </a>
+    <ul class="sub">';
+            while ($batch_fetch_sql_result_row = mysqli_fetch_assoc($batch_fetch_sql_result)) {
+
+                echo '<li ';
+                if ($_GET['batch-id'] == $batch_fetch_sql_result_row['batch_id']) {
+                    echo 'class="active"';
+                }
+                echo '><a href="admin_students.php?stream-id=' . $stream_fetch_sql_result_row['stream_id'] . '&stream-name=' . $stream_fetch_sql_result_row['course_name'] . ' ' . $stream_fetch_sql_result_row['stream_name'] . '&batch-id=' . $batch_fetch_sql_result_row['batch_id'] . '&batch-name=' . $batch_fetch_sql_result_row['batch_name'] . '">' . $batch_fetch_sql_result_row['batch_name'] . '</a></li>';
+            }
+            echo '</ul>
+</li>';
+
+        } else {
+            echo '<li ';
+            if ($sub_section == $stream_fetch_sql_result_row['stream_id']) {
+                echo 'class="active"';
+            }
+            echo '><a href="admin_students.php?stream-id=' . $stream_fetch_sql_result_row['stream_id'] . '&stream-name=' . $stream_fetch_sql_result_row['course_name'] . ' ' . $stream_fetch_sql_result_row['stream_name'] . '">' . $stream_fetch_sql_result_row['course_name'] . ' ' . $stream_fetch_sql_result_row['stream_name'] . '</a></li>';
+        }
+    }
+
+    echo '          </ul>
+                </li>';
+
     echo '<li class="sub-menu">
                     <a ';
 
@@ -97,16 +115,8 @@ function print_sidebar($main_section, $sub_section, $db_connection)
         echo 'class="active"';
     }
 
-    echo '><a href="admin_suspended_teachers.php">Suspended Teachers</a></li>';
-//                        <li ';
-//
-//    if ($sub_section == "Add Teachers") {
-//
-//        echo 'class="active"';
-//    }
-//
-//    echo '><a href="admin_add_teacher.php">Add Teachers</a></li>
-    echo '<li ';
+    echo '><a href="admin_suspended_teachers.php">Suspended Teachers</a></li>
+    <li ';
 
     if ($sub_section == "All Teachers") {
 
@@ -115,88 +125,9 @@ function print_sidebar($main_section, $sub_section, $db_connection)
 
     echo '><a href="admin_all_teachers.php">All Teachers</a></li>
                     </ul>
-                </li>
-                <li class="sub-menu">
-                    <a ';
+                </li>';
 
-    if ($main_section == "Courses") {
-
-        echo 'class="active"';
-    }
-
-    echo ' href="javascript:">
-                        <i class=" fa fa-bar-chart-o"></i>
-                        <span>Courses</span>
-                    </a>
-                    <ul class="sub">
-                        <li ';
-
-    if ($sub_section == "All Courses") {
-
-        echo 'class="active"';
-    }
-
-    echo '><a href="admin_all_courses.php">All Courses</a></li>';
-//                        <li ';
-//
-//    if ($sub_section == "Add Courses") {
-//
-//        echo 'class="active"';
-//    }
-//
-//    echo '><a href="admin_add_course.php">Add Courses</a></li>
-    echo '<li ';
-
-    if ($sub_section == "All Streams") {
-
-        echo 'class="active"';
-    }
-
-    echo '><a href="admin_all_streams.php">All Streams</a></li>';
-//                        <li ';
-//
-//    if ($sub_section == "Add Streams") {
-//
-//        echo 'class="active"';
-//    }
-//
-//    echo '><a href="admin_add_stream.php">Add Streams</a></li>
-    echo '<li ';
-
-    if ($sub_section == "All Subjects") {
-
-        echo 'class="active"';
-    }
-
-    echo '><a href="admin_all_subjects.php">All Subjects</a></li>';
-//                        <li ';
-//
-//    if ($sub_section == "Add Subjects") {
-//
-//        echo 'class="active"';
-//    }
-//
-//    echo '><a href="admin_add_subject.php">Add Subjects</a></li>
-//    echo                '<li ';
-//
-//    if ($sub_section == "Add Batchs") {
-//
-//        echo 'class="active"';
-//    }
-//
-//    echo '><a href="admin_add_batch.php">Add Batchs</a></li>
-    echo '<li ';
-
-    if ($sub_section == "All Batchs") {
-
-        echo 'class="active"';
-    }
-
-    echo '><a href="admin_all_batchs.php">All Batchs</a></li>
-                        
-                    </ul>
-                </li>
-                <li class="sub-menu">
+    echo '<li class="sub-menu">
                     <a ';
 
     if ($main_section == "Parents") {
@@ -234,38 +165,58 @@ function print_sidebar($main_section, $sub_section, $db_connection)
 
     echo '><a href="#">Add Parents</a></li>
                     </ul>
-                </li>
+                </li>';
 
-                <li class="sub-menu">
+    echo '<li class="sub-menu">
                     <a ';
 
-    if ($main_section == "Students") {
+    if ($main_section == "Courses") {
 
         echo 'class="active"';
     }
 
     echo ' href="javascript:">
                         <i class=" fa fa-bar-chart-o"></i>
-                        <span>Students</span>
+                        <span>Courses</span>
                     </a>
-                    <ul class="sub">';
+                    <ul class="sub">
+                        <li ';
 
-    $assigned_courses_sql = "SELECT `streams`.`stream_id`,`streams`.`stream_name`,`courses`.`course_name` FROM `streams`,`courses` WHERE `streams`.`course_id`=`courses`.`course_id` ORDER BY `courses`.`course_name`,`streams`.`stream_name`";
+    if ($sub_section == "All Courses") {
 
-    $assigned_courses_sql_result = $db_connection->query($assigned_courses_sql);
-    while ($assigned_courses_sql_result_row = mysqli_fetch_assoc($assigned_courses_sql_result)) {
-
-        echo '<li ';
-        if ($sub_section == $assigned_courses_sql_result_row['stream_id']) {
-            echo 'class="active"';
-        }
-        echo '><a href="admin_students.php?stream-id=' . $assigned_courses_sql_result_row['stream_id'] . '&stream-name=' . $assigned_courses_sql_result_row['course_name'] . ' ' . $assigned_courses_sql_result_row['stream_name'] . '">' . $assigned_courses_sql_result_row['course_name'] . ' ' . $assigned_courses_sql_result_row['stream_name'] . '</a></li>';
+        echo 'class="active"';
     }
 
-    echo '          </ul>
-                </li>
-                
-            </ul>
+    echo '><a href="admin_all_courses.php">All Courses</a></li>
+    <li ';
+
+    if ($sub_section == "All Streams") {
+
+        echo 'class="active"';
+    }
+
+    echo '><a href="admin_all_streams.php">All Streams</a></li>
+    <li ';
+
+    if ($sub_section == "All Subjects") {
+
+        echo 'class="active"';
+    }
+
+    echo '><a href="admin_all_subjects.php">All Subjects</a></li>
+    <li ';
+
+    if ($sub_section == "All Batchs") {
+
+        echo 'class="active"';
+    }
+
+    echo '><a href="admin_all_batchs.php">All Batchs</a></li>
+                        
+                    </ul>
+                </li>';
+
+    echo '</ul>
             <!-- sidebar menu end-->
         </div>
     </aside>
