@@ -26,7 +26,7 @@ if (isset($_GET['action'])) {
     }
 }
 
-$teacher_fetch_sql = "SELECT `teacher_id`, `full_name`, `mobile_number` FROM `teachers` WHERE `status` = 1";
+$teacher_fetch_sql = "SELECT `teacher_id`, `full_name`, `mobile_number`,`username`,`password` FROM `teachers` WHERE `status` = 1";
 //echo $teacher_fetch_sql;
 
 $teacher_fetch_query_result = $db_connection->query($teacher_fetch_sql);
@@ -98,6 +98,7 @@ print_head("Admin", "All Teachers");
                                 <th><i class="fa fa-bullhorn"></i> Full Name</th>
                                 <th class="hidden-phone"><i class="fa fa-question-circle"></i>Assigned Courses</th>
                                 <th><i class="fa fa-bookmark"></i> Mobile Number</th>
+                                <th><i class="fa fa-bookmark"></i> Credentials</th>
                                 <!--                                <th><i class=" fa fa-edit"></i> Actions</th>-->
                             </tr>
                             </thead>
@@ -131,6 +132,7 @@ print_head("Admin", "All Teachers");
                                 <td><a href="#">' . $teacher_fetch_query_result_row['full_name'] . '</a></td>
                                 <td>' . $assigned_courses . ' </td >
                                 <td > ' . $teacher_fetch_query_result_row['mobile_number'] . ' </td >
+                                <td>' . $teacher_fetch_query_result_row['username'] . ' - ' . $teacher_fetch_query_result_row['password'] . '</td>
                                 ';
 //                                <td><a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-teacher&teacher-id=' . $teacher_fetch_query_result_row['teacher_id'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></a></td>
                                 echo '
