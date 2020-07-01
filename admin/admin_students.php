@@ -30,7 +30,7 @@ if (isset($_GET['action'])) {
 
         $random_number = checkExistingUsername($db_connection);
 
-        $student_update_sql = "UPDATE `students` SET `status`=2,`username`='tacs$random_number',`password`='tacs$random_number' WHERE `student_id`='$student_id'";
+        $student_update_sql = "UPDATE `students` SET `status`=2,`username`='tacs$random_number',`password`='pw$random_number' WHERE `student_id`='$student_id'";
 //        echo $student_update_sql;
 
         $student_update_query_result = $db_connection->query($student_update_sql);
