@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="getBatches#3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" singleton="false" path="$PROJECT_DIR$/api_test/getBatches.http" index="3" runType="Run single request">
+    <method v="2" />
+  </configuration>
+</component>

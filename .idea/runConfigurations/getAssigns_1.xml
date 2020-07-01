@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="getAssigns#1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" singleton="false" path="$PROJECT_DIR$/api_test/getAssigns.http" runType="Run single request">
+    <method v="2" />
+  </configuration>
+</component>
