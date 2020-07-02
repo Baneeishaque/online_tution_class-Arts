@@ -105,7 +105,7 @@ print_head("Admin", "Add Batchs");
                                 </div>
                             </div>
                             <div class="form-group has-error">
-                                <label class="col-sm-2 control-label col-lg-2" for="inputError">Subject Name</label>
+                                <label class="col-sm-2 control-label col-lg-2" for="inputError">Batch Name</label>
                                 <div class="col-lg-10">
                                     <input type="text" class="form-control" name="batch-name" required>
                                 </div>
