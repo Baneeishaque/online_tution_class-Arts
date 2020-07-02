@@ -156,7 +156,7 @@ print_head("Admin", "View Student");
                             <br>
                             <div class="form-group has-error">
                                 <center>
-                                    <a href="<?php echo 'admin_student_profile.php?student-id=' . $_GET['student-id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $_GET['stream-name'] . '&full-name=' . $_GET['full-name'] . '&mobile-number=' . $_GET['mobile-number'] . '&email-address=' . $_GET['email-address'] . '&batch-number=' . $_GET['batch-number'] . '&additional-mobile-number=' . $_GET['additional-mobile-number'] . '&additional-email-address=' . $_GET['additional-email-address'] . '&photo=' . $_GET['photo']; ?>">
+                                    <a href="<?php echo 'admin_student_profile.php?student-id=' . $_GET['student-id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $_GET['stream-name'] . '&full-name=' . $_GET['full-name'] . '&mobile-number=' . $_GET['mobile-number'] . '&email-address=' . $_GET['email-address'] . '&batch-number=' . $_GET['batch-number'] . '&additional-mobile-number=' . $_GET['additional-mobile-number'] . '&additional-email-address=' . $_GET['additional-email-address'] . '&photo=' . $_GET['photo']; ?>&target=update">
                                         <button type="button" class="btn btn-danger">Update Profile</button>
                                     </a>
                                 </center>

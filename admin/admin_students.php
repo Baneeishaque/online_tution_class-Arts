@@ -169,10 +169,19 @@ print_head("Admin", "Students");
                     echo '<br>
             <div class="alert alert-success"><b>Well done!</b> Student Enabled successfully...</div>';
 
+                } else if (filter_input(INPUT_GET, 'message') == 'success5') {
+
+                    echo '<br>
+            <div class="alert alert-success"><b>Well done!</b> Student Updated successfully...</div>';
+
                 } elseif (filter_input(INPUT_GET, 'message') == 'failure') {
 
                     echo '<br>
             <div class="alert alert-danger"><b>Oh snap!</b> Try Again...</div>';
+                } elseif (filter_input(INPUT_GET, 'message') == 'failure2') {
+
+                    echo '<br>
+            <div class="alert alert-danger"><b>Oh snap, Upload Failure!</b> Try Again...</div>';
                 }
             }
             ?>
@@ -225,7 +234,7 @@ print_head("Admin", "Students");
                                 <td>';
                                 if ($student_fetch_query_result_row['status'] == '0') {
 
-                                    echo ' <a href="admin_student_profile.php?student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '&full-name=' . $student_fetch_query_result_row['full_name'] . '&mobile-number=' . $student_fetch_query_result_row['mobile_number'] . '&email-address=' . $student_fetch_query_result_row['email_address'] . '&batch-number=' . $student_fetch_query_result_row['batch_number'] . '&additional-mobile-number=' . $student_fetch_query_result_row['additional_mobile'] . '&additional-email-address=' . $student_fetch_query_result_row['additional_email'] . '&photo=' . $student_fetch_query_result_row['photo'] . '"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
+                                    echo ' <a href="admin_student_profile.php?student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '&full-name=' . $student_fetch_query_result_row['full_name'] . '&mobile-number=' . $student_fetch_query_result_row['mobile_number'] . '&email-address=' . $student_fetch_query_result_row['email_address'] . '&batch-number=' . $student_fetch_query_result_row['batch_number'] . '&additional-mobile-number=' . $student_fetch_query_result_row['additional_mobile'] . '&additional-email-address=' . $student_fetch_query_result_row['additional_email'] . '&photo=' . $student_fetch_query_result_row['photo'] . '&target=verify"><button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button></a>
                                     <a href="' . basename($_SERVER["SCRIPT_FILENAME"]) . '?action=delete-student&student-id=' . $student_fetch_query_result_row['student_id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $student_fetch_query_result_row['course_name'] . ' ' . $student_fetch_query_result_row['stream_name'] . '"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button></a>';
 
                                 } else if ($student_fetch_query_result_row['status'] == '1') {

@@ -1,6 +1,8 @@
 <?php
 include_once '../db_config.php';
 //var_dump($_GET);
+//var_dump($_POST);
+//var_dump($_FILES);
 
 if ((!isset($_GET['student-id'])) || (!isset($_GET['stream-id'])) || (!isset($_GET['full-name'])) || (!isset($_GET['mobile-number'])) || (!isset($_GET['email-address'])) || (!isset($_GET['batch-number']))) {
 
@@ -30,15 +32,28 @@ if (isset($_POST['submit'])) {
     //        TODO : Check NA
 
     $student_id = filter_input(INPUT_GET, 'student-id');
-    $random_number = checkExistingUsername($db_connection);
 
     $photo_file = $_POST['photo_file'];
     $target_dir = "photos/";
     $file_name = $_FILES["photo_file"]["name"];
     $target_file = $target_dir . basename($_FILES["photo_file"]["name"]);
-    move_uploaded_file($_FILES["photo_file"]["tmp_name"], $target_file);
 
-    $student_update_sql = "UPDATE `students` SET `full_name`='" . $_POST['full_name'] . "',`mobile_number`='" . $_POST['mobile_number'] . "',`email_address`='" . $_POST['email_address'] . "',`studying_class`='" . $_POST['studying_class'] . "',`status`=2,`username`='tacs$random_number',`password`='tacs$random_number',`batch_number`='" . $_POST['batch_number'] . "',`additional_mobile`='" . $_POST['additional_mobile_number'] . "',`additional_email`='" . $_POST['additional_email_address'] . "',`photo`='$file_name' WHERE `student_id`='$student_id'";
+    if (!move_uploaded_file($_FILES["photo_file"]["tmp_name"], $target_file)) {
+
+        header("Location: admin_students.php?message=failure2&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
+        exit();
+    }
+
+    if (isset($_GET['target']) && $_GET['target'] == "verify") {
+
+        $random_number = checkExistingUsername($db_connection);
+        $student_update_sql = "UPDATE `students` SET `full_name`='" . $_POST['full_name'] . "',`mobile_number`='" . $_POST['mobile_number'] . "',`email_address`='" . $_POST['email_address'] . "',`studying_class`='" . $_POST['studying_class'] . "',`status`=2,`username`='tacs$random_number',`password`='pw$random_number',`batch_number`='" . $_POST['batch_number'] . "',`additional_mobile`='" . $_POST['additional_mobile_number'] . "',`additional_email`='" . $_POST['additional_email_address'] . "',`photo`='$file_name' WHERE `student_id`='$student_id'";
+
+    } else if (isset($_GET['target']) && $_GET['target'] == "update") {
+
+        $random_number = checkExistingUsername($db_connection);
+        $student_update_sql = "UPDATE `students` SET `full_name`='" . $_POST['full_name'] . "',`mobile_number`='" . $_POST['mobile_number'] . "',`email_address`='" . $_POST['email_address'] . "',`studying_class`='" . $_POST['studying_class'] . "',`status`=2,`batch_number`='" . $_POST['batch_number'] . "',`additional_mobile`='" . $_POST['additional_mobile_number'] . "',`additional_email`='" . $_POST['additional_email_address'] . "',`photo`='$file_name' WHERE `student_id`='$student_id'";
+    }
 //        echo $student_update_sql;
 
     $student_update_query_result = $db_connection->query($student_update_sql);
@@ -46,9 +61,16 @@ if (isset($_POST['submit'])) {
     if ($student_update_query_result == 1) {
 
         //Update Success
-        header("Location: admin_students.php?message=success&random=$random_number&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
-        exit();
+        if (isset($_GET['target']) && $_GET['target'] == "verify") {
 
+            header("Location: admin_students.php?message=success&random=$random_number&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
+            exit();
+
+        } else if (isset($_GET['target']) && $_GET['target'] == "update") {
+
+            header("Location: admin_students.php?message=success5&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
+            exit();
+        }
     } else {
 
 //            echo $db_connection->error;
@@ -57,10 +79,7 @@ if (isset($_POST['submit'])) {
         header("Location: admin_students.php?message=failure&stream-id=" . $_GET['stream-id'] . "&stream-name=" . $_GET['stream-name']);
         exit();
     }
-
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +112,7 @@ print_head("Admin", "Confirm Student");
                 <div class="col-lg-12">
                     <div class="form-panel">
                         <form class="form-horizontal tasi-form" method="post"
-                              action="<?php echo basename($_SERVER["SCRIPT_FILENAME"]) . '?student-id=' . $_GET['student-id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $_GET['stream-name'] . '&full-name=' . $_GET['full-name'] . '&mobile-number=' . $_GET['mobile-number'] . '&email-address=' . $_GET['email-address'] . '&batch-number=' . $_GET['batch-number']; ?>"
+                              action="<?php echo basename($_SERVER["SCRIPT_FILENAME"]) . '?student-id=' . $_GET['student-id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $_GET['stream-name'] . '&full-name=' . $_GET['full-name'] . '&mobile-number=' . $_GET['mobile-number'] . '&email-address=' . $_GET['email-address'] . '&batch-number=' . $_GET['batch-number'] . '&target=' . $_GET['target']; ?>"
                               enctype="multipart/form-data">
                             <div class="form-group has-success">
                                 <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Full Name</label>
