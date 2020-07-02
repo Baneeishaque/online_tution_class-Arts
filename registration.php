@@ -20,6 +20,12 @@ if (isset($_POST['submit'])) {
     $studying_class = $_POST['studying_class'];
     $studying_batch = $_POST['studying_batch'];
 
+    if ($studying_class == "NA") {
+
+        header("Location: " . basename($_SERVER["SCRIPT_FILENAME"]) . "?message=no-stream&has-values=true&full_name=" . $full_name . "&mobile_number=" . $mobile_number . "&email_address=" . $email_address . "&studying_class=" . $studying_class);
+        exit();
+    }
+
     $batch_sql = "SELECT `batch_id` FROM `batchs` WHERE `stream_id`='$studying_class'";
     $batch_sql_result = $db_connection->query($batch_sql);
 //    var_dump($batch_sql_result);
@@ -89,6 +95,10 @@ print_head("Student", "Registration");
             } else if (isset($_GET['message']) && $_GET['message'] == 'no-batch') {
 
                 echo '            <div class="alert alert-danger"><b>Oh snap!</b> Select your batch and try submitting again...</div>';
+
+            } else if (isset($_GET['message']) && $_GET['message'] == 'no-stream') {
+
+                echo '            <div class="alert alert-danger"><b>Oh snap!</b> Select your stream and try submitting again...</div>';
 
             } else if (isset($_GET['message']) && $_GET['message'] == 'duplicate-mobile') {
 
