@@ -4,7 +4,7 @@ include_once '../db_config.php';
 //var_dump($_POST);
 //var_dump($_FILES);
 
-if ((!isset($_GET['student-id'])) || (!isset($_GET['stream-id'])) || (!isset($_GET['full-name'])) || (!isset($_GET['mobile-number'])) || (!isset($_GET['email-address'])) || (!isset($_GET['batch-number']))) {
+if ((!isset($_GET['student-id'])) || (!isset($_GET['stream-id'])) || (!isset($_GET['full-name'])) || (!isset($_GET['mobile-number'])) || (!isset($_GET['email-address'])) || (!isset($_GET['batch-number'])) || (!isset($_GET['additional-mobile-number'])) || (!isset($_GET['additional-email-address']))) {
 
     header('Location: admin_current_teachers.php');
     exit;
@@ -112,7 +112,7 @@ print_head("Admin", "Confirm Student");
                 <div class="col-lg-12">
                     <div class="form-panel">
                         <form class="form-horizontal tasi-form" method="post"
-                              action="<?php echo basename($_SERVER["SCRIPT_FILENAME"]) . '?student-id=' . $_GET['student-id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $_GET['stream-name'] . '&full-name=' . $_GET['full-name'] . '&mobile-number=' . $_GET['mobile-number'] . '&email-address=' . $_GET['email-address'] . '&batch-number=' . $_GET['batch-number'] . '&target=' . $_GET['target']; ?>"
+                              action="<?php echo basename($_SERVER["SCRIPT_FILENAME"]) . '?student-id=' . $_GET['student-id'] . '&stream-id=' . $_GET['stream-id'] . '&stream-name=' . $_GET['stream-name'] . '&full-name=' . $_GET['full-name'] . '&mobile-number=' . $_GET['mobile-number'] . '&email-address=' . $_GET['email-address'] . '&batch-number=' . $_GET['batch-number'] . '&target=' . $_GET['target'] . '&additional-mobile-number=' . $_GET['additional-mobile-number'] . '&additional-email-address=' . $_GET['additional-email-address']; ?>"
                               enctype="multipart/form-data">
                             <div class="form-group has-success">
                                 <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Full Name</label>
