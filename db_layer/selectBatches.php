@@ -1,13 +1,13 @@
 <?php
 
-function selectAdmins($db_connection)
+function selectBatches($db_connection)
 {
     $selectSql = "SELECT
-                    `admin_id`,
-                    `username`,
-                    `password`
+                    `batch_id`,
+                    `batch_name`,
+                    `stream_id`
                 FROM
-                    `admin`;
+                    `batchs`;
                 ";
 
     $selectSqlResult = $db_connection->query($selectSql);
