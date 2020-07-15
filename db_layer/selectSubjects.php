@@ -1,13 +1,13 @@
 <?php
 
-function selectAdmins($db_connection)
+function selectSubjects($db_connection)
 {
     $selectSql = "SELECT
-                    `admin_id`,
-                    `username`,
-                    `password`
+                    `subject_id`,
+                    `stream_id`,
+                    `subject_name`
                 FROM
-                    `admin`;
+                    `subjects`;
                 ";
 
     $selectSqlResult = $db_connection->query($selectSql);

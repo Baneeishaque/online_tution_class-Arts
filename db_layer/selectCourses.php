@@ -1,13 +1,13 @@
 <?php
 
-function selectAdmins($db_connection)
+function selectCourses($db_connection)
 {
     $selectSql = "SELECT
-                    `admin_id`,
-                    `username`,
-                    `password`
+                    `course_id`,
+                    `course_name`,
+                   
                 FROM
-                    `admin`;
+                    `courses`;
                 ";
 
     $selectSqlResult = $db_connection->query($selectSql);
