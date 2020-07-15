@@ -25,6 +25,6 @@ if (!$db_connection->query($insertSql)) {
     $arr = array('status' => "0");
 }
 
-echo json_encode($arr);
+return json_encode($arr);
 }
 ?>

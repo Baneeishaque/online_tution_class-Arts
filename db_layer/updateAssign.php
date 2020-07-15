@@ -25,6 +25,6 @@ if (!$db_connection->query($updateSql)) {
   $arr = array('status' => "0");
 }
 
-echo json_encode($arr);
+return json_encode($arr);
 }
 ?>

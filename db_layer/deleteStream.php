@@ -21,6 +21,6 @@ function deleteStream($db_connection)
         $arr = array('status' => "0");
     }
     
-    echo json_encode($arr);
+    return json_encode($arr);
 }
 ?>

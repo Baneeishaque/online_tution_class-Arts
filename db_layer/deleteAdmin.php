@@ -2,12 +2,12 @@
 
 function deleteAdmin($db_connection)
 {
-    $admin_id = filter_input(INPUT_POST,'admin_id');
+    $admin_username = filter_input(INPUT_POST,'admin_username');
 
     $deleteSql = "DELETE
     FROM
     `admin`
-    WHERE `admin_id` = '$admin_id';
+    WHERE `username` = '$admin_username';
     ";
 
     
@@ -21,6 +21,6 @@ function deleteAdmin($db_connection)
         $arr = array('status' => "0");
     }
     
-    echo json_encode($arr);
+    return json_encode($arr);
 }
 ?>
